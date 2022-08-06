@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<!-- Фронтендом тут пахнет, jquery лучший инструмент для создания костылей на js -->
+<head>
+    <title>
+        Читалка публичного клуба
+    </title>
+    <link href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💩</text></svg>"
+          rel="icon">
+    <script crossorigin="anonymous" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/main.js"></script>
+
+    <link crossorigin="anonymous" href="/style.css" media="all" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="row">
+    <div class="col_12">
+        <menu>
+            Open club reader |
+            <span id="progress-text" title="0">0/0</span> |
+            <a href="#" onclick="load('new');return false">new</a> |
+            <a href="#" onclick="load('best');return false">best</a> |
+            <a href="#" onclick="load('past');return false">past</a> |
+            <span id="find">
+                <a href="#">search</a> <input class="none" name="search" style="width: 60px" autocomplete="off" />
+            </span>
+            |
+            <a href="/scrape-sitemap">check for updates</a>
+        </menu>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col_12" id="posts"></div>
+</div>
+
+<div class="row">
+    <div class="col_12">&nbsp;</div>
+</div>
+
+</body>
+</html>
