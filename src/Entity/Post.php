@@ -40,4 +40,7 @@ final class Post
 
     #[ORM\Column]
     public bool $like = false;
+
+    #[ORM\Column(nullable: true)]
+    public ?int $votes;
 }

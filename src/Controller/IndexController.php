@@ -26,12 +26,12 @@ final class IndexController
     {
         $sitemapParser = new SitemapParser();
         $entityManager = $doctrine->getManager();
-        $urlRepository = $doctrine->getRepository(Post::class);
+        $postRepository = $doctrine->getRepository(Post::class);
 
         $urls = $sitemapParser();
         foreach ($urls as $url) {
             if (!in_array($url->type, [PostType::INTRO, PostType::WEEKLY_DIGEST])) {
-                $entity = $urlRepository->findOneBy(['clubId' => $url->clubId]);
+                $entity = $postRepository->findOneBy(['clubId' => $url->clubId]);
                 if (!$entity) {
                     $entity = new Post();
                 }
@@ -51,10 +51,10 @@ final class IndexController
     public function go(int $id, ManagerRegistry $doctrine): RedirectResponse
     {
         $entityManager = $doctrine->getManager();
-        $urlRepository = $doctrine->getRepository(Post::class);
+        $postRepository = $doctrine->getRepository(Post::class);
         $page = new PostPageParser();
 
-        $post = $urlRepository->findOneBy(['id' => $id]);
+        $post = $postRepository->findOneBy(['id' => $id]);
         if (!$post) {
             throw new NotFoundHttpException();
         }
@@ -78,10 +78,10 @@ final class IndexController
     public function fetchDate(string $dateAsString, ManagerRegistry $doctrine): RedirectResponse
     {
         $entityManager = $doctrine->getManager();
-        $urlRepository = $doctrine->getRepository(Post::class);
+        $postRepository = $doctrine->getRepository(Post::class);
         $page = new PostPageParser();
 
-        $posts = $urlRepository->findByDate($dateAsString);
+        $posts = $postRepository->findByDate($dateAsString);
         foreach ($posts as $post) {
             $page($post);
             sleep(1);

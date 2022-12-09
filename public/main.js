@@ -1,7 +1,7 @@
 function load(type, word) {
     const posts = $('#posts');
     posts.empty()
-    posts.html('<div class="center" "><pre>¯\\_(ツ)_/¯</pre></div>')
+    noPostsFound(posts);
 
     $.get('/api/' + type + ('search' == type && (typeof word !== 'undefined' || word != '') ? '/' + word.replaceAll('?', '') : ''), function (data) {
         let currentDate;
@@ -22,17 +22,22 @@ function load(type, word) {
             }
             let isNew = !element.title ? true : false
 
-            $('#posts .next:last ul').append('<li><a class="go ' + (isNew ? 'new' : '') + '" target="_blank" href="/go/' + element.id + '">' + (isNew ? element.type + ' ' + element.clubId : element.type + ' ➡ ' + element.title) + '</a></li>')
+            let votes = typeof element.votes !== "undefined" && element.votes !== null ? element.votes : 0
+
+            $('#posts .next:last ul').append('<li>' +
+                '<a title="' + votes + '" class="go ' + (isNew ? 'new' : '') + '" target="_blank" href="/go/' + element.id + '">' +
+                (isNew ? element.type + ' ' + element.clubId : element.type + ' ➡ ' + element.title) +
+                '</a></li>')
 
             if ($('#posts .next:last a.new').length > 0) {
                 $('#posts .next:last h3 a.none').removeClass('none')
             }
 
-            if ('past' == type || 'search' == type) {
-                $('#posts .next:last ul li:last').prepend('<a href="#" style="color: green" onclick="vote(1, ' + element.id + ')">▲</a> - ')
+            if ('done' == type || 'search' == type) {
+                $('#posts .next:last ul li:last').prepend('<a href="#" style="color: green;text-decoration: none" onclick="vote(1, ' + element.id + ')">▲</a> - ')
             }
-            if ('best' == type) {
-                $('#posts .next:last ul li:last').prepend('<a href="#" style="color: red" onclick="vote(2, ' + element.id + ')">▼</a> - ')
+            if ('favorite' == type) {
+                $('#posts .next:last ul li:last').prepend('<a href="#" style="color: red;text-decoration: none" onclick="vote(2, ' + element.id + ')">▼</a> - ')
             }
         })
 
@@ -48,16 +53,24 @@ function load(type, word) {
                 $('#progress-text').text((parseInt(progress[0]) + 1) + '/' + progress[1])
 
                 if (1 == ulLen) {
-                    ul.parent().remove()
+                    ul.parent().remove()                    
+                }
+
+                if ($('#posts').children().length == 0) {
+                    noPostsFound(posts)
                 }
             })
         }
     })
 }
 
+function noPostsFound(posts) {
+    posts.html('<div class="center" "><pre>¯\\_(ツ)_/¯</pre></div>');
+}
+
 function vote(direction, id) {
     $.get('/api/vote/' + direction + '/' + id, function () {
-        load('best');
+        load('favorite');
     })
 }
 

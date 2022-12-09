@@ -14,27 +14,8 @@ final class PostPageParser
 {
     public function __invoke(Post $post)
     {
-        $url = $this->getUrl($post);
-
         if (!$post->title) {
-            $client = new Client([
-                RequestOptions::HTTP_ERRORS => false,
-            ]);
-            $request = $client->get($url);
-
-            if (404 == $request->getStatusCode()) {
-                $post->deletedAt = new DateTime();
-
-                return $post;
-            }
-
-            if (200 != $request->getStatusCode()) {
-                throw new LogicException();
-            }
-
-            $content = $request->getBody()->getContents();
-
-            $crawler = new Crawler($content);
+            $crawler = $this->crawl($post);
 
             if (true == $this->isClosed($crawler)) {
                 $post->deletedAt = new DateTime();
@@ -49,14 +30,12 @@ final class PostPageParser
             }
 
             $date = $this->replaceDate($date);
+            $title = $this->prepareTitle($title);
+            $votes = $this->parsePageVotes($crawler);
 
             $post->createdAt = DateTime::createFromFormat('d m Y', $date);
-
-            // str_replace('\xc2\xa0', ' ', $title)
-            $title = str_replace(' ', ' ', $title);
-            $title = str_replace(' Публичный пост', '', $title);
-
             $post->title = $title;
+            $post->votes = $votes;
         }
 
         return $post;
@@ -64,7 +43,10 @@ final class PostPageParser
 
     private function isClosed(Crawler $crawler)
     {
-        return $crawler->filter('.access-denied')->count() > 0;
+        $isAccessDeny = $crawler->filter('.access-denied')->count() > 0;
+        $noBody = $crawler->filter('body')->count() < 1;
+
+        return $isAccessDeny || $noBody;
     }
 
     public function getUrl(Post $post): string
@@ -106,5 +88,39 @@ final class PostPageParser
         $date = $crawler->filter('article .post-actions-line .post-actions-line-item')->first()->text();
 
         return [$text, $date];
+    }
+
+    private function parsePageVotes(Crawler $crawler): int
+    {
+        return (int) $crawler->filter('post-upvote ')->attr(':initial-upvotes');
+    }
+
+    private function prepareTitle(mixed $title): string|array
+    {
+        // str_replace('\xc2\xa0', ' ', $title)
+        $title = str_replace(' ', ' ', $title);
+        $title = str_replace(' Публичный пост', '', $title);
+
+        return $title;
+    }
+
+    private function crawl(Post $post): Crawler
+    {
+        $client = new Client([
+            RequestOptions::HTTP_ERRORS => false,
+        ]);
+        $request = $client->get($this->getUrl($post));
+
+        if (404 == $request->getStatusCode()) {
+            return new Crawler('');
+        }
+
+        if (200 != $request->getStatusCode()) {
+            throw new LogicException();
+        }
+
+        $content = $request->getBody()->getContents();
+
+        return new Crawler($content);
     }
 }

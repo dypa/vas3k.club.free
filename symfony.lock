@@ -84,9 +84,6 @@
             ".php-cs-fixer.dist.php"
         ]
     },
-    "friendsofphp/proxy-manager-lts": {
-        "version": "v1.0.5"
-    },
     "guzzlehttp/guzzle": {
         "version": "7.4.1"
     },
@@ -95,9 +92,6 @@
     },
     "guzzlehttp/psr7": {
         "version": "2.1.0"
-    },
-    "laminas/laminas-code": {
-        "version": "4.5.1"
     },
     "php-cs-fixer/diff": {
         "version": "v2.0.2"
@@ -235,9 +229,6 @@
     "symfony/process": {
         "version": "v6.0.3"
     },
-    "symfony/proxy-manager-bridge": {
-        "version": "v6.0.2"
-    },
     "symfony/routing": {
         "version": "6.0",
         "recipe": {
@@ -250,9 +241,6 @@
             "config/packages/routing.yaml",
             "config/routes.yaml"
         ]
-    },
-    "symfony/runtime": {
-        "version": "v6.0.0"
     },
     "symfony/service-contracts": {
         "version": "v3.0.0"
@@ -268,8 +256,5 @@
     },
     "symfony/var-exporter": {
         "version": "v6.0.0"
-    },
-    "symfony/yaml": {
-        "version": "v6.0.2"
     }
 }

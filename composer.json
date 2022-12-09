@@ -8,18 +8,16 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-simplexml": "*",
-        "doctrine/doctrine-bundle": "^2.5",
-        "doctrine/orm": "^2.11",
-        "guzzlehttp/guzzle": "7.4.*",
-        "symfony/console": "6.0.*",
-        "symfony/css-selector": "6.0.*",
-        "symfony/dom-crawler": "6.0.*",
-        "symfony/dotenv": "6.0.*",
-        "symfony/flex": "^2",
-        "symfony/framework-bundle": "6.0.*",
-        "symfony/proxy-manager-bridge": "6.0.*",
-        "symfony/runtime": "6.0.*",
-        "symfony/yaml": "6.0.*"
+        "doctrine/doctrine-bundle": "2.7.2",
+        "doctrine/orm": "2.13.4",
+        "guzzlehttp/guzzle": "7.5.0",
+        "symfony/css-selector": "6.2.0",
+        "symfony/dom-crawler": "6.2.0",
+        "symfony/dotenv": "6.2.0",
+        "symfony/flex": "v2.2.3",
+        "symfony/framework-bundle": "6.2.1",
+        "symfony/runtime": "6.2.0",
+        "symfony/yaml": "6.2.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "*"
@@ -39,11 +37,6 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "App\\Tests\\": "tests/"
         }
     },
     "replace": {
@@ -73,7 +66,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.0.*",
+            "require": "6.2.*",
             "docker": false
         }
     }

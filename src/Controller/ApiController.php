@@ -30,20 +30,20 @@ final class ApiController
         return new JsonResponse($posts);
     }
 
-    #[Route('/best', methods: ['GET'])]
-    public function best(ManagerRegistry $doctrine): JsonResponse
+    #[Route('/favorite', methods: ['GET'])]
+    public function favorite(ManagerRegistry $doctrine): JsonResponse
     {
         $postRepository = $doctrine->getRepository(Post::class);
-        $posts = $postRepository->findBest();
+        $posts = $postRepository->findFavorite();
 
         return new JsonResponse($posts);
     }
 
-    #[Route('/past', methods: ['GET'])]
-    public function past(ManagerRegistry $doctrine): JsonResponse
+    #[Route('/done', methods: ['GET'])]
+    public function done(ManagerRegistry $doctrine): JsonResponse
     {
         $postRepository = $doctrine->getRepository(Post::class);
-        $posts = $postRepository->findPast();
+        $posts = $postRepository->findDone();
 
         return new JsonResponse($posts);
     }
@@ -73,6 +73,15 @@ final class ApiController
     {
         $postRepository = $doctrine->getRepository(Post::class);
         $posts = $postRepository->search($word);
+
+        return new JsonResponse($posts);
+    }
+
+    #[Route('/best', methods: ['GET'])]
+    public function best(ManagerRegistry $doctrine): JsonResponse
+    {
+        $postRepository = $doctrine->getRepository(Post::class);
+        $posts = $postRepository->findBest();
 
         return new JsonResponse($posts);
     }

@@ -45,7 +45,7 @@ final class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[]
      */
-    public function findBest(): array
+    public function findFavorite(): array
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->andWhere($qb->expr()->eq('q.like', true));
@@ -59,7 +59,7 @@ final class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[]
      */
-    public function findPast(): array
+    public function findDone(): array
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->andWhere($qb->expr()->isNotNull('q.viewedAt'));
@@ -79,7 +79,7 @@ final class PostRepository extends ServiceEntityRepository
         $total = $qb1->getQuery()->getSingleScalarResult();
 
         $qb2 = clone $qb;
-        $qb2->where($qb2->expr()->isNotNull('q.viewedAt'));
+        $qb2->andWhere($qb2->expr()->isNotNull('q.viewedAt'));
         $viewed = $qb2->getQuery()->getSingleScalarResult();
 
         return [$total, $viewed];
@@ -120,6 +120,20 @@ final class PostRepository extends ServiceEntityRepository
             $qb->expr()->literal('%'.str_replace(['%', '?'], '', $word).'%')
         ));
         $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
+
+        $result = $qb->getQuery()->getResult();
+
+        return $this->transformPostsArray($result);
+    }
+
+    /**
+     * @return Post[]
+     */
+    public function findBest(): array
+    {
+        $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
+        $qb->orderBy(new OrderBy('q.votes', 'DESC'));
+        $qb->setMaxResults(250);
 
         $result = $qb->getQuery()->getResult();
 
