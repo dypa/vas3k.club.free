@@ -1,13 +1,13 @@
 function load(type, word) {
-    const posts = $('#posts');
-    posts.empty()
-    noPostsFound(posts);
+    const postsElement = $('#posts');
+    postsElement.empty()
+    noPostsFound(postsElement);
 
     $.get('/api/' + type + ('search' == type && (typeof word !== 'undefined' || word != '') ? '/' + word.replaceAll('?', '') : ''), function (data) {
         let currentDate;
 
         if (0 != data.length) {
-            $('#posts .center').remove()
+            $('.center', postsElement).remove()
         }
 
         data.forEach(function (element) {
@@ -18,31 +18,31 @@ function load(type, word) {
                 if ('new' == type) {
                     link = ' <a class="none" href="/date/' + currentDate + '">📥</a>'
                 }
-                $('#posts').append('<div class="next"><h3>' + currentDate + '' + link + '</h3><ul></ul></div>')
+                postsElement.append('<div class="next"><h3>' + currentDate + '' + link + '</h3><ul></ul></div>')
             }
             let isNew = !element.title ? true : false
 
             let votes = typeof element.votes !== "undefined" && element.votes !== null ? element.votes : 0
 
-            $('#posts .next:last ul').append('<li>' +
+            $('.next:last ul', postsElement).append('<li>' +
                 '<a title="' + votes + '" class="go ' + (isNew ? 'new' : '') + '" target="_blank" href="/go/' + element.id + '">' +
                 (isNew ? element.type + ' ' + element.clubId : element.type + ' ➡ ' + element.title) +
                 '</a></li>')
 
-            if ($('#posts .next:last a.new').length > 0) {
-                $('#posts .next:last h3 a.none').removeClass('none')
+            if ($('.next:last a.new', postsElement).length > 0) {
+                $('.next:last h3 a.none', postsElement).removeClass('none')
             }
 
             if ('done' == type || 'search' == type) {
-                $('#posts .next:last ul li:last').prepend('<a href="#" style="color: green;text-decoration: none" onclick="vote(1, ' + element.id + ')">▲</a> - ')
+                $('.next:last ul li:last', postsElement).prepend('<a href="#" style="color: green;text-decoration: none" onclick="vote(1, ' + element.id + ')">▲</a> - ')
             }
             if ('favorite' == type) {
-                $('#posts .next:last ul li:last').prepend('<a href="#" style="color: red;text-decoration: none" onclick="vote(2, ' + element.id + ')">▼</a> - ')
+                $('.next:last ul li:last', postsElement).prepend('<a href="#" style="color: red;text-decoration: none" onclick="vote(2, ' + element.id + ')">▼</a> - ')
             }
         })
 
         if ('new' == type) {
-            $('#posts a.go').on('click', function () {
+            $('a.go', postsElement).on('click', function () {
                 const ul = $(this).closest('ul')
                 const ulLen = ul.children().length
 
@@ -56,8 +56,8 @@ function load(type, word) {
                     ul.parent().remove()                    
                 }
 
-                if ($('#posts').children().length == 0) {
-                    noPostsFound(posts)
+                if (postsElement.children().length == 0) {
+                    noPostsFound(postsElement)
                 }
             })
         }
