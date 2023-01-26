@@ -15,28 +15,35 @@ final class PostPageParser
     public function __invoke(Post $post)
     {
         if (!$post->title) {
-            $crawler = $this->crawl($post);
-
-            if (true == $this->isClosed($crawler)) {
-                $post->deletedAt = new DateTime();
-
-                return $post;
-            }
-
-            if (PostType::BATTLE == $post->postType) {
-                list($title, $date) = $this->parseBattleNodes($crawler);
-            } else {
-                list($title, $date) = $this->parsePageNodes($crawler);
-            }
-
-            $date = $this->replaceDate($date);
-            $title = $this->prepareTitle($title);
-            $votes = $this->parsePageVotes($crawler);
-
-            $post->createdAt = DateTime::createFromFormat('d m Y', $date);
-            $post->title = $title;
-            $post->votes = $votes;
+            $this->crawlAndSave($post);
         }
+
+        return $post;
+    }
+
+    public function crawlAndSave(Post $post): Post
+    {
+        $crawler = $this->crawl($post);
+
+        if (true == $this->isClosed($crawler)) {
+            $post->deletedAt = new DateTime();
+
+            return $post;
+        }
+
+        if (PostType::BATTLE == $post->postType) {
+            list($title, $date) = $this->parseBattleNodes($crawler);
+        } else {
+            list($title, $date) = $this->parsePageNodes($crawler);
+        }
+
+        $date = $this->replaceDate($date);
+        $title = $this->prepareTitle($title);
+        $votes = $this->parsePageVotes($crawler);
+
+        $post->createdAt = DateTime::createFromFormat('d m Y', $date);
+        $post->title = $title;
+        $post->votes = $votes;
 
         return $post;
     }

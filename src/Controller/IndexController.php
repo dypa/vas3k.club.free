@@ -61,6 +61,10 @@ final class IndexController
 
         $url = $page->getUrl($post);
 
+        if ($post->viewedAt) {
+            $url .= '?comment_order=-created_at#comments';
+        }
+
         $post = $page($post);
 
         if ($post->deletedAt) {

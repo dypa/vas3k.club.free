@@ -36,6 +36,14 @@ function load(type, word) {
             if ('done' == type || 'search' == type) {
                 $('.next:last ul li:last', postsElement).prepend('<a href="#" style="color: green;text-decoration: none" onclick="vote(1, ' + element.id + ')">▲</a> - ')
             }
+
+            const date1 = element.updatedAt !== null ? element.updatedAt.date : null;
+            const date2 = element.viewedAt !== null ? element.viewedAt.date : null;
+            if (date2 != null && date1 != null && date1 > date2) {
+                const el = $('.next:last ul li:last .go', postsElement)
+                el.css('color', 'red')
+            }
+
             if ('favorite' == type) {
                 $('.next:last ul li:last', postsElement).prepend('<a href="#" style="color: red;text-decoration: none" onclick="vote(2, ' + element.id + ')">▼</a> - ')
             }

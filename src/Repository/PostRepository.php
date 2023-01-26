@@ -28,6 +28,20 @@ final class PostRepository extends ServiceEntityRepository
     /**
      * @return Post[]
      */
+    public function getForDbUpdate()
+    {
+        $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
+        $qb->andWhere('q.updatedAt < :updated');
+        $qb->setParameter('updated', date('Y-m-d', strtotime('-1 week')));
+
+        $result = $qb->getQuery()->getResult();
+
+        return $this->transformPostsArray($result);
+    }
+
+    /**
+     * @return Post[]
+     */
     public function findNew(): array
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
@@ -133,7 +147,7 @@ final class PostRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->orderBy(new OrderBy('q.votes', 'DESC'));
-        $qb->setMaxResults(250);
+        $qb->setMaxResults(500);
 
         $result = $qb->getQuery()->getResult();
 
