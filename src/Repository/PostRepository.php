@@ -153,4 +153,18 @@ final class PostRepository extends ServiceEntityRepository
 
         return $this->transformPostsArray($result);
     }
+
+    /**
+     * @return Post[]
+     */
+    public function findUpdated(): array
+    {
+        $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
+        $qb->andWhere('q.updatedAt > q.viewedAt');
+        $qb->orderBy(new OrderBy('q.updatedAt', 'DESC'));
+
+        $result = $qb->getQuery()->getResult();
+
+        return $this->transformPostsArray($result);
+    }
 }

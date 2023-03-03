@@ -4,10 +4,8 @@ namespace App\Service;
 
 use App\Entity\Post;
 use App\Enum\PostType;
-use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
-use LogicException;
 use Symfony\Component\DomCrawler\Crawler;
 
 final class PostPageParser
@@ -26,7 +24,7 @@ final class PostPageParser
         $crawler = $this->crawl($post);
 
         if (true == $this->isClosed($crawler)) {
-            $post->deletedAt = new DateTime();
+            $post->deletedAt = new \DateTime();
 
             return $post;
         }
@@ -41,7 +39,7 @@ final class PostPageParser
         $title = $this->prepareTitle($title);
         $votes = $this->parsePageVotes($crawler);
 
-        $post->createdAt = DateTime::createFromFormat('d m Y', $date);
+        $post->createdAt = \DateTime::createFromFormat('d m Y', $date);
         $post->title = $title;
         $post->votes = $votes;
 
@@ -123,7 +121,7 @@ final class PostPageParser
         }
 
         if (200 != $request->getStatusCode()) {
-            throw new LogicException();
+            throw new \LogicException();
         }
 
         $content = $request->getBody()->getContents();

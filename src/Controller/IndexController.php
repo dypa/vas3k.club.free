@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Enum\PostType;
+use App\Repository\PostRepository;
 use App\Service\PostPageParser;
 use App\Service\SitemapParser;
-use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class IndexController
 {
+    public function __construct(private readonly PostRepository $postRepository)
+    {
+    }
+
     #[Route('/', methods: ['GET'])]
     public function index(ManagerRegistry $doctrine): RedirectResponse
     {
@@ -26,12 +30,11 @@ final class IndexController
     {
         $sitemapParser = new SitemapParser();
         $entityManager = $doctrine->getManager();
-        $postRepository = $doctrine->getRepository(Post::class);
 
         $urls = $sitemapParser();
         foreach ($urls as $url) {
             if (!in_array($url->type, [PostType::INTRO, PostType::WEEKLY_DIGEST])) {
-                $entity = $postRepository->findOneBy(['clubId' => $url->clubId]);
+                $entity = $this->postRepository->findOneBy(['clubId' => $url->clubId]);
                 if (!$entity) {
                     $entity = new Post();
                 }
@@ -51,10 +54,9 @@ final class IndexController
     public function go(int $id, ManagerRegistry $doctrine): RedirectResponse
     {
         $entityManager = $doctrine->getManager();
-        $postRepository = $doctrine->getRepository(Post::class);
         $page = new PostPageParser();
 
-        $post = $postRepository->findOneBy(['id' => $id]);
+        $post = $this->postRepository->findOneBy(['id' => $id]);
         if (!$post) {
             throw new NotFoundHttpException();
         }
@@ -70,7 +72,7 @@ final class IndexController
         if ($post->deletedAt) {
             $url = '/404';
         } else {
-            $post->viewedAt = new DateTime();
+            $post->viewedAt = new \DateTime();
         }
 
         $entityManager->flush();
@@ -82,10 +84,9 @@ final class IndexController
     public function fetchDate(string $dateAsString, ManagerRegistry $doctrine): RedirectResponse
     {
         $entityManager = $doctrine->getManager();
-        $postRepository = $doctrine->getRepository(Post::class);
         $page = new PostPageParser();
 
-        $posts = $postRepository->findByDate($dateAsString);
+        $posts = $this->postRepository->findByDate($dateAsString);
         foreach ($posts as $post) {
             $page($post);
             sleep(1);

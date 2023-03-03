@@ -4,10 +4,7 @@ namespace App\Service;
 
 use App\Dto\SitemapLocNode;
 use App\Enum\PostType;
-use DateTime;
 use GuzzleHttp\Client;
-
-use function simplexml_load_string;
 
 final class SitemapParser
 {
@@ -36,14 +33,14 @@ final class SitemapParser
      */
     private function parseSitemap(string $content): array
     {
-        $xmlNode = simplexml_load_string($content);
+        $xmlNode = \simplexml_load_string($content);
         $urls = [];
         foreach ($xmlNode->children() as $node) {
             $loc = (string) $node->loc;
             $lastmod = (string) $node->lastmod;
             $dto = new SitemapLocNode();
             $dto->location = $loc;
-            $dto->lastmod = DateTime::createFromFormat('Y-m-d', $lastmod);
+            $dto->lastmod = \DateTime::createFromFormat('Y-m-d', $lastmod);
             $dto->type = PostType::from(preg_replace('~'.self::REGEXP.'~', '$1', $loc));
             $dto->clubId = preg_replace('~'.self::REGEXP.'~', '$2', $loc);
 

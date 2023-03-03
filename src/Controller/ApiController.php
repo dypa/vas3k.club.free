@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Post;
 use App\Enum\VoteType;
+use App\Repository\PostRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -12,11 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api')]
 final class ApiController
 {
+    public function __construct(private readonly PostRepository $postRepository)
+    {
+    }
+
     #[Route('/progress', methods: ['GET'])]
     public function progress(ManagerRegistry $doctrine): JsonResponse
     {
-        $urlRepository = $doctrine->getRepository(Post::class);
-        $progress = $urlRepository->countProgress();
+        $progress = $this->postRepository->countProgress();
 
         return new JsonResponse(['total' => $progress[0], 'viewed' => $progress[1]]);
     }
@@ -24,8 +27,7 @@ final class ApiController
     #[Route('/new', methods: ['GET'])]
     public function new(ManagerRegistry $doctrine): JsonResponse
     {
-        $postRepository = $doctrine->getRepository(Post::class);
-        $posts = $postRepository->findNew();
+        $posts = $this->postRepository->findNew();
 
         return new JsonResponse($posts);
     }
@@ -33,8 +35,7 @@ final class ApiController
     #[Route('/favorite', methods: ['GET'])]
     public function favorite(ManagerRegistry $doctrine): JsonResponse
     {
-        $postRepository = $doctrine->getRepository(Post::class);
-        $posts = $postRepository->findFavorite();
+        $posts = $this->postRepository->findFavorite();
 
         return new JsonResponse($posts);
     }
@@ -42,8 +43,7 @@ final class ApiController
     #[Route('/done', methods: ['GET'])]
     public function done(ManagerRegistry $doctrine): JsonResponse
     {
-        $postRepository = $doctrine->getRepository(Post::class);
-        $posts = $postRepository->findDone();
+        $posts = $this->postRepository->findDone();
 
         return new JsonResponse($posts);
     }
@@ -52,10 +52,9 @@ final class ApiController
     public function vote(int $typeId, int $postId, ManagerRegistry $doctrine): JsonResponse
     {
         $entityManager = $doctrine->getManager();
-        $postRepository = $doctrine->getRepository(Post::class);
 
         $type = VoteType::from($typeId);
-        $post = $postRepository->findOneBy(['id' => $postId]);
+        $post = $this->postRepository->findOneBy(['id' => $postId]);
 
         if (!$post) {
             throw new NotFoundHttpException();
@@ -71,8 +70,7 @@ final class ApiController
     #[Route('/search/{word}', methods: ['GET'])]
     public function search(ManagerRegistry $doctrine, string $word): JsonResponse
     {
-        $postRepository = $doctrine->getRepository(Post::class);
-        $posts = $postRepository->search($word);
+        $posts = $this->postRepository->search($word);
 
         return new JsonResponse($posts);
     }
@@ -80,8 +78,15 @@ final class ApiController
     #[Route('/best', methods: ['GET'])]
     public function best(ManagerRegistry $doctrine): JsonResponse
     {
-        $postRepository = $doctrine->getRepository(Post::class);
-        $posts = $postRepository->findBest();
+        $posts = $this->postRepository->findBest();
+
+        return new JsonResponse($posts);
+    }
+
+    #[Route('/updated', methods: ['GET'])]
+    public function updated(ManagerRegistry $doctrine): JsonResponse
+    {
+        $posts = $this->postRepository->findUpdated();
 
         return new JsonResponse($posts);
     }

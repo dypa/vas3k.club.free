@@ -39,7 +39,7 @@ function load(type, word) {
 
             const date1 = element.updatedAt !== null ? element.updatedAt.date : null;
             const date2 = element.viewedAt !== null ? element.viewedAt.date : null;
-            if (date2 != null && date1 != null && date1 > date2) {
+            if ('updated' != type && ( date2 != null && date1 != null && date1 > date2)) {
                 const el = $('.next:last ul li:last .go', postsElement)
                 el.css('color', 'red')
             }
@@ -104,5 +104,9 @@ $(document).ready(function () {
         let parent = $(this).parent()
         $('input', parent).addClass('none')
         $('a', parent).removeClass('none')
+    })
+
+    $('#scrape').on('click', function () {
+        $(this).text('...')
     })
 })

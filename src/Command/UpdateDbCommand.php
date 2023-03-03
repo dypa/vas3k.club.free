@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Entity\Post;
-use App\Repository\PostRepository;
 use App\Service\PostPageParser;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -28,13 +27,12 @@ class UpdateDbCommand extends Command
         foreach ($posts as $post) {
             $this->pageParser->crawlAndSave($post);
             sleep(1);
-            $i++;
+            ++$i;
 
             if (mt_rand(1, 100) >= 80) {
                 $entityManager->flush();
-                echo $i . PHP_EOL;
+                echo $i.PHP_EOL;
             }
-
         }
         $entityManager->flush();
 
