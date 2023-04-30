@@ -1,4 +1,4 @@
-FROM php:8.1.14-cli-alpine3.17
+FROM php:8.1.18-fpm-alpine3.17
 
 RUN apk add --no-cache git
 
@@ -13,9 +13,10 @@ xdebug.start_with_request=trigger\n\
 xdebug.trigger_value=PHPSTORM\n\
 xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/99-php-xdebug.ini
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.4.4
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.5.5
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
 
+EXPOSE 9000
 WORKDIR /app
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public/"]
+CMD  ["php-fpm", "-F", "-R", "-O"]

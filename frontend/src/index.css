@@ -13,7 +13,12 @@ body {
     margin: auto;
 }
 
-.col_12, .col_9, .col_8, .col_6, .col_4, .col_3 {
+.col_12,
+.col_9,
+.col_8,
+.col_6,
+.col_4,
+.col_3 {
     margin-left: 10px;
     margin-right: 10px;
     display: inline;
@@ -60,7 +65,8 @@ html {
     }
 }
 
-a, a:visited {
+a,
+a:visited {
     color: #000;
     font-size: large;
 }
@@ -70,11 +76,16 @@ menu {
     font-size: x-large;
 }
 
-#progress-text {
+menu span {
+    /* font-size: 18px; */
     font-size: large;
 }
 
-#posts {
+menu sup {
+    font-size: small;
+}
+
+#content {
     background-color: white;
 
     border-radius: 10px;
@@ -84,19 +95,24 @@ menu {
     padding-right: 20px;
 }
 
-#posts a {
+#content a {
     margin-top: 2em;
     font-size: larger;
 }
 
-#posts li {
+#content li {
     margin-top: 1em;
-}
-
-.none {
-    display: none;
 }
 
 .center {
     text-align: center;
+}
+
+#search {
+    margin: 10px
+}
+
+#nyancat {
+    white-space: pre-line;
+    width: 100px;
 }

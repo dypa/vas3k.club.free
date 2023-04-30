@@ -1,0 +1,49 @@
+version: '3.9'
+
+#container_name used because i use external bash script
+services:
+  web:
+    container_name: vas3k-club-reader-web
+    depends_on: 
+      - api
+      - nginx
+    build:
+      context: frontend
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app #:ro
+    environment:
+      - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
+
+
+  api:
+    container_name: vas3k-club-reader-api
+    depends_on:
+      - nginx
+    build: 
+      context: backend
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped       
+    volumes:
+      - ./backend:/app
+      # - ./backend:/app:ro
+      # - ./backend/var:/app/var:rw
+      # - ./backend/vendor:/app/vendor:rw
+      # - ./backend/composer.lock:/app/composer.lock:rw
+      # - ./backend/symfony.lock:/app/symfony.lock:rw
+      # - ./backend/.php-cs-fixer.cache:/app/.php-cs-fixer.cache:rw
+
+
+  nginx:
+    container_name: vas3k-club-reader-nginx
+    image: nginx:stable
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Moscow
+    ports:
+      - ${VAS3K_CLUB_PORT:-3000}:80

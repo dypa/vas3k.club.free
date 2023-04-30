@@ -40,8 +40,9 @@ final class Post
     #[ORM\Column]
     public bool $like = false;
 
-    #[ORM\Column(nullable: true)]
-    public ?int $votes;
+    #[ORM\Column]
+    public int $votes = 0;
 
-    public ?string $type;
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $html;
 }

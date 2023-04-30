@@ -21,7 +21,8 @@ final class PostPageParser
 
     public function crawlAndSave(Post $post): Post
     {
-        $crawler = $this->crawl($post);
+        $html = $this->crawl($post);
+        $crawler = new Crawler($html);
 
         if (true == $this->isClosed($crawler)) {
             $post->deletedAt = new \DateTime();
@@ -42,6 +43,7 @@ final class PostPageParser
         $post->createdAt = \DateTime::createFromFormat('d m Y', $date);
         $post->title = $title;
         $post->votes = $votes;
+        $post->html = $html;
 
         return $post;
     }
@@ -109,7 +111,7 @@ final class PostPageParser
         return $title;
     }
 
-    private function crawl(Post $post): Crawler
+    private function crawl(Post $post): string
     {
         $client = new Client([
             RequestOptions::HTTP_ERRORS => false,
@@ -117,15 +119,13 @@ final class PostPageParser
         $request = $client->get($this->getUrl($post));
 
         if (404 == $request->getStatusCode()) {
-            return new Crawler('');
+            return '';
         }
 
         if (200 != $request->getStatusCode()) {
             throw new \LogicException();
         }
 
-        $content = $request->getBody()->getContents();
-
-        return new Crawler($content);
+        return $request->getBody()->getContents();
     }
 }
