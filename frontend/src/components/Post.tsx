@@ -65,8 +65,8 @@ export const Post: Component<Props> = (props: Props) => {
 
     return (
         <>
-            {!post.like && <span><a onClick={() => { vote(1, parseInt(post.id)) }}>👍</a>&nbsp;</span>}
-            {post.like && <span><a onClick={() => { vote(2, parseInt(post.id)) }}>👎</a>&nbsp;</span>}
+            {!post.like && <span><a onClick={() => { vote(1, parseInt(post.id)) }}>❤️‍🔥 👍</a>&nbsp;</span>}
+            {post.like && <span><a onClick={() => { vote(2, parseInt(post.id)) }}>👎 🤟🏿</a>&nbsp;</span>}
             {isNew() && <sup>new</sup>}
             <a
                 title={votes()}
