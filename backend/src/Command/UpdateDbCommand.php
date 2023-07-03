@@ -22,6 +22,8 @@ class UpdateDbCommand extends Command
     {
         $entityManager = $this->doctrine->getManager();
 
+        $entityManager->getConnection()->getConfiguration()->getSQLLogger(null);
+
         $posts = $this->postRepository->getForDbUpdate();
 
         $i = 1;
@@ -29,10 +31,10 @@ class UpdateDbCommand extends Command
             $post = $this->postRepository->findOneBy(['id' => $postId]);
 
             $this->pageParser->crawlAndSave($post);
-            sleep(1);
+            usleep(5 * 500);
             ++$i;
 
-            if (mt_rand(1, 100) >= 95) {
+            if (0 == $i % 50) {
                 $entityManager->flush();
                 $entityManager->clear();
                 gc_enable();

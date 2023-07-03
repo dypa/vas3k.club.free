@@ -57,11 +57,13 @@ export const Posts: Component<Props> = (props: Props) => {
                     </For>
                 </ul>
 
-                <div class="center">
-                    <a href={'?page=' + (page() > 0 ? page() - 1 : page())}>◄◄◄</a>
-                    <span> {page() + 1} / {total()} </span>
-                    <a href={'?page=' + (page() + 1 < total() ? page() + 1 : page())}>►►►</a>
-                </div>
+                <Show when={total() > page()}>
+                    <div class="center">
+                        <a href={'?page=' + (page() > 0 ? page() - 1 : page())}>◄◄◄</a>
+                        <span> {page() + 1} / {total()} </span>
+                        <a href={'?page=' + (page() + 1 < total() ? page() + 1 : page())}>►►►</a>
+                    </div>
+                </Show>
             </Show>
         </>
     )

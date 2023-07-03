@@ -7,10 +7,13 @@ use App\Repository\PostRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ *  @final Unable to create a proxy for a final class "App\Entity\Post" in prod env
+ */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\Index(fields: ['postType'])]
 #[ORM\Index(fields: ['clubId'])]
-final class Post
+/* final */ class Post
 {
     #[ORM\Id, ORM\Column, ORM\GeneratedValue]
     public readonly ?int $id;

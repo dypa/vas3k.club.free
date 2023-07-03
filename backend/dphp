@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+/usr/bin/env php -dxdebug.start_with_request=yes "$@"

@@ -52,6 +52,7 @@ final class PostRepository extends ServiceEntityRepository
         $qb->select('q.id');
         $qb->andWhere('q.updatedAt < :updated');
         $qb->setParameter('updated', date('Y-m-d', strtotime('-1 week')));
+        // /$qb->setFirstResult(860);
 
         return $qb->getQuery()->getSingleColumnResult();
     }
