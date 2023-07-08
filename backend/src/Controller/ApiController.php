@@ -15,12 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/api')]
 final class ApiController
 {
-    public function __construct(private readonly PostRepository $postRepository)
-    {
+    public function __construct(
+        private readonly PostRepository $postRepository,
+    ) {
     }
 
     #[Route('/progress', methods: ['GET'])]
-    public function progress(ManagerRegistry $doctrine): JsonResponse
+    public function progress(): JsonResponse
     {
         $progress = $this->postRepository->countProgress();
 
@@ -28,7 +29,7 @@ final class ApiController
     }
 
     #[Route('/filter/{type}/{page}', methods: ['GET'], requirements: ['type' => '(new|updated|best|done|favorite)'], defaults: ['page' => 0])]
-    public function filter(string $type, string $page, ManagerRegistry $doctrine): JsonResponse
+    public function filter(string $type, string $page): JsonResponse
     {
         $paginator = $this->postRepository->filter($type, $page); // {'find' . $type}($page);
 
@@ -56,11 +57,11 @@ final class ApiController
 
         $entityManager->flush();
 
-        return new JsonResponse('ok');
+        return new JsonResponse(true);
     }
 
     #[Route('/search/{word}', methods: ['GET'])]
-    public function search(ManagerRegistry $doctrine, string $word): JsonResponse
+    public function search(string $word): JsonResponse
     {
         $posts = $this->postRepository->search($word);
 
@@ -70,40 +71,17 @@ final class ApiController
     #[Route('/scrape', methods: ['GET'])]
     public function scrapeSitemap(ManagerRegistry $doctrine): JsonResponse
     {
-        $sitemapParser = new SitemapParser();
-        $entityManager = $doctrine->getManager();
+        $sitemapParser = new SitemapParser($doctrine, $this->postRepository, $doctrine->getConnection(), $doctrine->getManager());
+        $sitemapParser();
 
-        $urls = $sitemapParser();
-        foreach ($urls as $url) {
-            if (!in_array($url->type, [PostType::INTRO, PostType::WEEKLY_DIGEST])) {
-                $entity = $this->postRepository->findOneBy(['clubId' => $url->clubId]);
-
-                if (!$entity) {
-                    $entity = new Post();
-                    $entity->clubId = $url->clubId;
-                    $entity->postType = $url->type;
-                    $entityManager->persist($entity);
-                }
-
-                $entity->updatedAt = $url->lastmod;
-
-                if (mt_rand(1, 100) >= 50) {
-                    $entityManager->flush();
-                    $entityManager->clear();
-                    gc_enable();
-                }
-            }
-        }
-        $entityManager->flush();
-
-        return new JsonResponse('ok');
+        return new JsonResponse(true);
     }
 
     #[Route('/mark-all-as-read', methods: ['GET'])]
-    public function markAllAsRead(ManagerRegistry $doctrine): JsonResponse
+    public function markAllAsRead(): JsonResponse
     {
         $this->postRepository->markAllAsRead();
 
-        return new JsonResponse('ok');
+        return new JsonResponse(true);
     }
 }

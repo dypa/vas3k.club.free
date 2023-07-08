@@ -4,11 +4,10 @@ import { getApiHost, reloadPage } from '../App'
 export type PostType = {
     id: string
     createdAt?: object
-    updatedAt: object
+    lastModified: object
     deletedAt?: object
     viewedAt?: object
     postType: string
-    clubId: string
     title?: string
     like: boolean
     votes: string
@@ -28,7 +27,7 @@ async function vote(direction: number, id: number) {
     }
 
     const json = await response.json()
-    if (json != 'ok') {
+    if (json != true) {
         return
     }
 
@@ -54,11 +53,11 @@ export const Post: Component<Props> = (props: Props) => {
         if (post.title?.length > 0) {
             setTitle(post.title)
         } else {
-            // setTitle(post.postType + ' ' + post.clubId)
-            setTitle(new Date(post.updatedAt.date).toLocaleDateString('ru-RU') + ' 🎁 ' + post.clubId + ' 😲 ')
+            // setTitle(post.postType + ' ' + post.id)
+            setTitle(new Date(post.lastModified.date).toLocaleDateString('ru-RU') + ' 🎁 ' + post.id + ' 😲 ')
         }
 
-        if (post.viewedAt !== null && post.updatedAt.date > post.viewedAt?.date) {
+        if (post.viewedAt !== null && post.lastModified.date > post.viewedAt?.date) {
             setNew(true)
         }
     })

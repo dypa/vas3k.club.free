@@ -16,7 +16,7 @@ final class IndexController
     }
 
     #[Route('/', methods: ['GET'])]
-    public function index(ManagerRegistry $doctrine): NotFoundHttpException
+    public function index(): NotFoundHttpException
     {
         return new NotFoundHttpException();
     }

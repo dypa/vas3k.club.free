@@ -12,17 +12,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\Index(fields: ['postType'])]
-#[ORM\Index(fields: ['clubId'])]
 /* final */ class Post
 {
-    #[ORM\Id, ORM\Column, ORM\GeneratedValue]
-    public readonly ?int $id;
+    #[ORM\Id, ORM\Column]
+    public string $id;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     public ?\DateTime $createdAt;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    public \DateTime $updatedAt;
+    public \DateTime $lastModified;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     public ?\DateTime $deletedAt;
@@ -34,12 +33,11 @@ use Doctrine\ORM\Mapping as ORM;
     #[ORM\Column(enumType: PostType::class)]
     public PostType $postType;
 
-    #[ORM\Column]
-    public string $clubId;
-
     #[ORM\Column(nullable: true)]
     public ?string $title;
 
+    // TODO move to Favorite
+    
     #[ORM\Column]
     public bool $like = false;
 

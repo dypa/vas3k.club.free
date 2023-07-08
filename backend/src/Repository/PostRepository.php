@@ -30,8 +30,7 @@ final class PostRepository extends ServiceEntityRepository
         $qb->select([
             'q.id',
             'q.createdAt',
-            'q.updatedAt',
-            'q.clubId',
+            'q.lastModified',
             'q.like',
             'q.votes',
             'q.title',
@@ -50,7 +49,7 @@ final class PostRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->select('q.id');
-        $qb->andWhere('q.updatedAt < :updated');
+        $qb->andWhere('q.lastModified < :updated');
         $qb->setParameter('updated', date('Y-m-d', strtotime('-1 week')));
         // /$qb->setFirstResult(860);
 
@@ -67,7 +66,7 @@ final class PostRepository extends ServiceEntityRepository
                 $qb->addSelect('CASE WHEN q.createdAt IS NULL THEN 1 ELSE 0 END AS HIDDEN orderNullFirst');
                 $qb->addOrderBy('orderNullFirst', 'DESC');
                 $qb->addOrderBy('q.createdAt', 'DESC');
-                $qb->addOrderBy('q.updatedAt', 'DESC');
+                $qb->addOrderBy('q.lastModified', 'DESC');
                 break;
 
             case 'favorite':
@@ -86,8 +85,8 @@ final class PostRepository extends ServiceEntityRepository
                 break;
 
             case 'updated':
-                $qb->andWhere('q.updatedAt > q.viewedAt');
-                $qb->orderBy(new OrderBy('q.updatedAt', 'DESC'));
+                $qb->andWhere('q.lastModified > q.viewedAt');
+                $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
                 break;
         }
 
@@ -110,7 +109,7 @@ final class PostRepository extends ServiceEntityRepository
         $viewed = $qb2->getQuery()->getSingleScalarResult();
 
         $qb3 = clone $qb;
-        $qb3->andWhere('q.viewedAt < q.updatedAt');
+        $qb3->andWhere('q.viewedAt < q.lastModified');
         $qb3->andWhere('q.deletedAt is NULL');
         $updated = $qb3->getQuery()->getSingleScalarResult();
 
@@ -142,7 +141,7 @@ final class PostRepository extends ServiceEntityRepository
         $qb->set('q.viewedAt', ':date');
         $qb->setParameter(':date', (new \DateTime())->format('Y-m-d H:i:s'));
 
-        $qb->andWhere('q.viewedAt < q.updatedAt');
+        $qb->andWhere('q.viewedAt < q.lastModified');
         $qb->andWhere('q.deletedAt is NULL');
 
         return $qb->getQuery()->execute();

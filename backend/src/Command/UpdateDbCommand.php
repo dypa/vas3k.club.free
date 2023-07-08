@@ -22,7 +22,8 @@ class UpdateDbCommand extends Command
     {
         $entityManager = $this->doctrine->getManager();
 
-        $entityManager->getConnection()->getConfiguration()->getSQLLogger(null);
+        // HACK
+        $this->doctrine->getConnection()->getConfiguration()->getSQLLogger(null);
 
         $posts = $this->postRepository->getForDbUpdate();
 

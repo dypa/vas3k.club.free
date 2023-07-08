@@ -1,7 +1,7 @@
 docker compose up -d --build
 
 docker exec vas3k-club-reader-api composer install
-docker exec vas3k-club-reader-api ./bin/console doctrine:schema:update --force
+docker exec vas3k-club-reader-api ./bin/console doctrine:schema:update --complete --force
 
 #because host `web` resolves to external ip, WTF?!
 #see nginx conf for description

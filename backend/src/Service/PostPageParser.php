@@ -58,7 +58,7 @@ final class PostPageParser
 
     public function getUrl(Post $post): string
     {
-        return 'https://vas3k.club/'.$post->postType->value.'/'.$post->clubId.'/';
+        return 'https://vas3k.club/'.$post->postType->value.'/'.$post->id.'/';
     }
 
     private function replaceDate(string $date): string

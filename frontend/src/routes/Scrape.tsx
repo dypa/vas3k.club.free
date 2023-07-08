@@ -16,7 +16,7 @@ export const Scrape: Component = () => {
         }
 
         const json = await response.json()
-        if (json != 'ok') {
+        if (json != true) {
             return
         }
 
