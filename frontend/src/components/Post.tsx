@@ -46,14 +46,14 @@ export const Post: Component<Props> = (props: Props) => {
             setTitle(post.title)
         } else {
             // setTitle(post.postType + ' ' + post.id)
-            setTitle(new Date(post.lastModified.date).toLocaleDateString('ru-RU') + ' 🎁 ' + post.id + ' 😲 ')
+            setTitle(' 🎁🎁🎁 ' + new Date(post.lastModified.date).toLocaleDateString('ru-RU') + ' 🎁🎁🎁 ')
         }
     })
 
     return (
         <>
-            {!post.like && <span><a title='👍' onClick={() => { vote(1, parseInt(post.id)) }}>🔥</a>&nbsp;</span>}
-            {post.like && <span><a title='👎' onClick={() => { vote(2, parseInt(post.id)) }}>🌚</a>&nbsp;</span>}
+            {!post.like && <span><a title='👍' onClick={() => { vote(1, parseInt(post.id)) }} style="cursor: pointer;">🔥</a>&nbsp;</span>}
+            {post.like && <span><a title='👎' onClick={() => { vote(2, parseInt(post.id)) }}  style="cursor: pointer;">🌚</a>&nbsp;</span>}
             &nbsp;&nbsp;&nbsp;
             <a
                 class="go"

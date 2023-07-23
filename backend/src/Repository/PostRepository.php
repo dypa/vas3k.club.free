@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 
 final class PostRepository extends ServiceEntityRepository
 {
-    private const POST_PEER_PAGE = 25;
+    private const POST_PEER_PAGE = 20;
 
     public function __construct(ManagerRegistry $registry)
     {
