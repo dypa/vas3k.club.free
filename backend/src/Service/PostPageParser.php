@@ -38,11 +38,9 @@ final class PostPageParser
 
         $date = $this->replaceDate($date);
         $title = $this->prepareTitle($title);
-        $votes = $this->parsePageVotes($crawler);
 
         $post->createdAt = \DateTime::createFromFormat('d m Y', $date);
         $post->title = $title;
-        $post->votes = $votes;
         $post->html = $html;
 
         return $post;
@@ -95,11 +93,6 @@ final class PostPageParser
         $date = $crawler->filter('article .post-actions-line .post-actions-line-item')->first()->text();
 
         return [$text, $date];
-    }
-
-    private function parsePageVotes(Crawler $crawler): int
-    {
-        return (int) $crawler->filter('post-upvote ')->attr(':initial-upvotes');
     }
 
     private function prepareTitle(mixed $title): string|array

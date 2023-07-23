@@ -19,7 +19,7 @@ final class SitemapParser
     public function __construct(
         private readonly ManagerRegistry $doctrine,
         private readonly PostRepository $postRepository,
-        private /*readonly*/ Connection $connection,
+        private /* readonly */ Connection $connection,
         private readonly EntityManagerInterface $entityManager,
     ) {
     }
@@ -49,6 +49,17 @@ final class SitemapParser
         $this->cleanUp();
 
         $this->entityManager->flush();
+
+        $this->connection->executeQuery('
+        UPDATE post SET html = NULL
+        WHERE 
+             deleted_at IS NULL
+             AND 
+             "like" = 0
+             AND 
+             viewed_at < DATE(\'now\', \'-7 days\') 
+        ');
+        $this->connection->executeQuery('VACUUM');
     }
 
     private function getSitemap(): string

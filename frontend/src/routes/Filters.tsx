@@ -13,12 +13,6 @@ export const New: Component = () => {
     )
 }
 
-export const Best: Component = () => {
-    return (
-        <Posts uri={generateUri('best')} />
-    )
-}
-
 export const Done: Component = () => {
     return (
         <Posts uri={generateUri('done')} />

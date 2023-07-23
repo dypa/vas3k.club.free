@@ -32,7 +32,6 @@ final class PostRepository extends ServiceEntityRepository
             'q.createdAt',
             'q.lastModified',
             'q.like',
-            'q.votes',
             'q.title',
             'q.postType',
         ]);
@@ -79,11 +78,6 @@ final class PostRepository extends ServiceEntityRepository
                 $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
                 break;
 
-            case 'best':
-                $qb->andWhere('q.votes > 100');
-                $qb->orderBy(new OrderBy('q.votes', 'DESC'));
-                break;
-
             case 'updated':
                 $qb->andWhere('q.lastModified > q.viewedAt');
                 $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
@@ -110,10 +104,13 @@ final class PostRepository extends ServiceEntityRepository
 
         $qb3 = clone $qb;
         $qb3->andWhere('q.viewedAt < q.lastModified');
-        $qb3->andWhere('q.deletedAt is NULL');
         $updated = $qb3->getQuery()->getSingleScalarResult();
 
-        return [$total, $viewed, $updated];
+        $qb4 = clone $qb;
+        $qb4->andWhere('q.like = 1');
+        $favorite = $qb4->getQuery()->getSingleScalarResult();
+
+        return [$total, $viewed, $updated, $favorite];
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Post;
-use App\Enum\PostType;
 use App\Enum\VoteType;
 use App\Repository\PostRepository;
 use App\Service\SitemapParser;
@@ -25,10 +23,15 @@ final class ApiController
     {
         $progress = $this->postRepository->countProgress();
 
-        return new JsonResponse(['total' => $progress[0], 'viewed' => $progress[1], 'updated' => $progress[2]]);
+        return new JsonResponse([
+            'total' => $progress[0],
+            'viewed' => $progress[1],
+            'updated' => $progress[2],
+            'liked' => $progress[3],
+        ]);
     }
 
-    #[Route('/filter/{type}/{page}', methods: ['GET'], requirements: ['type' => '(new|updated|best|done|favorite)'], defaults: ['page' => 0])]
+    #[Route('/filter/{type}/{page}', methods: ['GET'], requirements: ['type' => '(new|updated|done|favorite)'], defaults: ['page' => 0])]
     public function filter(string $type, string $page): JsonResponse
     {
         $paginator = $this->postRepository->filter($type, $page); // {'find' . $type}($page);

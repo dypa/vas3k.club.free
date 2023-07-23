@@ -37,12 +37,9 @@ use Doctrine\ORM\Mapping as ORM;
     public ?string $title;
 
     // TODO move to Favorite
-    
-    #[ORM\Column]
-    public bool $like = false;
 
     #[ORM\Column]
-    public int $votes = 0;
+    public bool $like = false;
 
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $html;
