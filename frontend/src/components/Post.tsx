@@ -37,23 +37,22 @@ export const Post: Component<Props> = (props: Props) => {
     const post: PostType = props.post
 
     const [uri, setUri] = createSignal('')
-    const [title, setTitle] = createSignal('')
+    const [title, setTitle] = createSignal(' 🎁🎁🎁 ' + new Date(post.lastModified.date).toLocaleDateString('ru-RU') + ' 🎁🎁🎁 ')
+    const [isNew, setIsNew] = createSignal(true)
 
     onMount(() => {
         setUri(getApiHost() + '/go/' + post.id)
 
         if (post.title?.length > 0) {
-            setTitle(post.title)
-        } else {
-            // setTitle(post.postType + ' ' + post.id)
-            setTitle(' 🎁🎁🎁 ' + new Date(post.lastModified.date).toLocaleDateString('ru-RU') + ' 🎁🎁🎁 ')
+            setIsNew(false)
+            setTitle(post.title?.replace(/^→ /, ''))
         }
     })
 
     return (
         <>
-            {!post.like && <span><a title='👍' onClick={() => { vote(1, parseInt(post.id)) }} style="cursor: pointer;">🔥</a>&nbsp;</span>}
-            {post.like && <span><a title='👎' onClick={() => { vote(2, parseInt(post.id)) }}  style="cursor: pointer;">🌚</a>&nbsp;</span>}
+            {!isNew() && !post.like && <span><a title='👍' onClick={() => { vote(1, parseInt(post.id)) }} style="cursor: pointer;">🔥</a>&nbsp;</span>}
+            {!isNew() && post.like && <span><a title='👎' onClick={() => { vote(2, parseInt(post.id)) }} style="cursor: pointer;">🌚</a>&nbsp;</span>}
             &nbsp;&nbsp;&nbsp;
             <a
                 class="go"
