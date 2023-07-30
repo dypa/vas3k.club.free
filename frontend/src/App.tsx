@@ -14,6 +14,7 @@ export function getApiHost(): string {
 
 export function reloadPage() {
   //TODO this is HACK
+
   setTimeout(() => { location.reload() }, 1000)
 }
 

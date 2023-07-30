@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Enum\VoteType;
 use App\Repository\PostRepository;
+use App\Service\PostPageParser;
 use App\Service\SitemapParser;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -57,6 +58,11 @@ final class ApiController
         }
 
         $post->like = (VoteType::UP == $type);
+
+        if ($post->like) {
+            $pageParser = new PostPageParser();
+            $post = $pageParser($post);
+        }
 
         $entityManager->flush();
 

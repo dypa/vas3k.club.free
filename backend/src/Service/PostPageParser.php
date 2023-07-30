@@ -12,7 +12,7 @@ final class PostPageParser
 {
     public function __invoke(Post $post)
     {
-        if (!$post->title) {
+        if ($post->like || !$post->title) {
             $this->crawlAndSave($post);
         }
 

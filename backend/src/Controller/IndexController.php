@@ -25,20 +25,20 @@ final class IndexController
     public function go(int $id, ManagerRegistry $doctrine): RedirectResponse
     {
         $entityManager = $doctrine->getManager();
-        $page = new PostPageParser();
+        $pageParser = new PostPageParser();
 
         $post = $this->postRepository->find($id);
         if (!$post) {
             throw new NotFoundHttpException();
         }
 
-        $url = $page->getUrl($post);
+        $url = $pageParser->getUrl($post);
 
         if ($post->viewedAt) {
             $url .= '?comment_order=-created_at#comments';
         }
 
-        $post = $page($post);
+        $post = $pageParser($post);
 
         if ($post->deletedAt) {
             $url = '/404';
