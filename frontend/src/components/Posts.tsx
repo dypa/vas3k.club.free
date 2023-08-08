@@ -13,8 +13,6 @@ export const Posts: Component<Props> = (props: Props) => {
     const [page, setPage] = createSignal(0)
     const [total, setTotal] = createSignal(0)
 
-
-
     onMount(async () => {
         if (searchParams.page) {
             const page = parseInt(searchParams.page)

@@ -1,29 +1,45 @@
-import { Component, For, createSignal } from "solid-js"
+import { Component, For, createSignal, onMount } from "solid-js"
+import { useSearchParams } from '@solidjs/router'
 import { getApiHost } from "../App"
 import { Post } from "../components/Post"
 import { NotFound } from "../components/NotFound"
 
-const [searchTerm, setSearchTerm] = createSignal('')
-const [results, setResults] = createSignal([])
+export const Search: Component = () => {
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchTerm, setSearchTerm] = createSignal('')
+    const [results, setResults] = createSignal([])
 
-//TODO async so results can be wrong
-async function loadResults(term: string) {
-    setResults([])
+    //TODO async so results can be wrong
+    async function loadResults(term: string) {
+        setResults([])
 
-    setSearchTerm(term)
-    const response = await fetch(getApiHost() + '/api/search/' + searchTerm())
+        term = term.trim()
+        if (!term) {
+            return
+        }
 
-    if (!response.ok) {
-        return
+        setSearchParams({ q: term })
+
+        setSearchTerm(term)
+        const response = await fetch(getApiHost() + '/api/search/' + searchTerm())
+
+        if (!response.ok) {
+            return
+        }
+
+        const json = await response.json()
+        setResults(json)
+
+        window.scrollTo(0, 0)
     }
 
-    const json = await response.json()
-    setResults(json)
+    onMount(async () => {
+        const term = searchParams.q
+        if (term) {
+            loadResults(term)
+        }
+    })
 
-    window.scrollTo(0, 0)
-}
-
-export const Search: Component = () => {
     return (
         <>
             <input
