@@ -1,0 +1,16 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "parser": "@typescript-eslint/parser", // added
+    "plugins": ["solid"], // added
+    "extends": ["standard-with-typescript", "plugin:solid/typescript"], // added
+    "parserOptions": {
+        "project": ["tsconfig.json"], // added
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+    }
+}
