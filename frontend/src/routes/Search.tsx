@@ -6,7 +6,7 @@ import { NotFound } from "../components/NotFound"
 
 export const Search: Component = () => {
     const [searchParams, setSearchParams] = useSearchParams()
-    const [searchTerm, setSearchTerm] = createSignal('')
+    const [searchQuery, setSearchQuery] = createSignal('')
     const [results, setResults] = createSignal([])
 
     //TODO async so results can be wrong
@@ -20,8 +20,8 @@ export const Search: Component = () => {
 
         setSearchParams({ q: term })
 
-        setSearchTerm(term)
-        const response = await fetch(getApiHost() + '/api/search/' + searchTerm())
+        setSearchQuery(term)
+        const response = await fetch(getApiHost() + '/api/search/' + searchQuery())
 
         if (!response.ok) {
             return
@@ -43,10 +43,11 @@ export const Search: Component = () => {
     return (
         <>
             <input
+                autoFocus="1"
                 id="search"
                 type="text"
                 placeholder="Что ищем?!"
-                value={searchTerm()}
+                value={searchQuery()}
                 onInput={(event) => loadResults(event.currentTarget.value)}
             />
             <ul>
