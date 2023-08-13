@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "lint": "eslint --fix-dry-run --ext .tsx,.ts ./src/*"
+    "eslint-fix": "eslint --fix --ext .tsx,.ts ./src/*"
   },
   "license": "MIT",
   "devDependencies": {

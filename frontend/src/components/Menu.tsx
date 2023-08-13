@@ -1,38 +1,38 @@
-import { A } from "@solidjs/router"
-import { Component, createSignal, onMount } from 'solid-js'
+import { A } from '@solidjs/router'
+import { type Component, createSignal, onMount } from 'solid-js'
 import { getApiHost, reloadPage } from '../App'
 
 export const Menu: Component = () => {
-    const [viewed, setVewed] = createSignal(0)
-    const [total, setTotal] = createSignal(0)
-    const [updated, setUpdated] = createSignal(0)
-    const [liked, setLiked] = createSignal(0)
+  const [viewed, setVewed] = createSignal(0)
+  const [total, setTotal] = createSignal(0)
+  const [updated, setUpdated] = createSignal(0)
+  const [liked, setLiked] = createSignal(0)
 
-    onMount(async () => {
-        const response = await fetch(getApiHost() + '/api/progress')
+  onMount(async () => {
+    const response = await fetch(getApiHost() + '/api/progress')
 
-        if (!response.ok) {
-            return
-        }
-
-        const json = await response.json()
-        setVewed(json.viewed)
-        setTotal(json.total)
-        setUpdated(json.updated)
-        setLiked(json.liked)
-    })
-
-    async function markAllAsRead() {
-        const response = await fetch(getApiHost() + '/api/mark-all-as-read')
-
-        if (!response.ok) {
-            return
-        }
-
-        reloadPage()
+    if (!response.ok) {
+      return
     }
 
-    return (
+    const json = await response.json()
+    setVewed(json.viewed)
+    setTotal(json.total)
+    setUpdated(json.updated)
+    setLiked(json.liked)
+  })
+
+  async function markAllAsRead () {
+    const response = await fetch(getApiHost() + '/api/mark-all-as-read')
+
+    if (!response.ok) {
+      return
+    }
+
+    reloadPage()
+  }
+
+  return (
         <menu>
             Open club reader <sup title={(total() - viewed()).toString()}>{viewed()}/{total()}</sup>
             &nbsp;|&nbsp;
@@ -48,5 +48,5 @@ export const Menu: Component = () => {
             &nbsp;|&nbsp;
             <A href="/scrape">refresh</A>
         </menu>
-    )
+  )
 }

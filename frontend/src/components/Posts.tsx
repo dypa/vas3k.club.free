@@ -1,48 +1,48 @@
 import { useSearchParams } from '@solidjs/router'
-import { Component, For, Show, createSignal, onMount } from 'solid-js'
+import { type Component, For, Show, createSignal, onMount } from 'solid-js'
 import { NotFound } from './NotFound'
 import { Post } from './Post'
 
-type Props = {
-    uri: string
+interface Props {
+  uri: string
 }
 
 export const Posts: Component<Props> = (props: Props) => {
-    const [posts, setPosts] = createSignal([])
-    const [searchParams, setSearchParams] = useSearchParams()
-    const [page, setPage] = createSignal(0)
-    const [total, setTotal] = createSignal(0)
+  const [posts, setPosts] = createSignal([])
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [page, setPage] = createSignal(0)
+  const [total, setTotal] = createSignal(0)
 
-    onMount(async () => {
-        if (searchParams.page) {
-            const page = parseInt(searchParams.page)
-            setPage(page)
-        }
-
-        loadPosts()
-    })
-
-    async function loadPosts() {
-        setPosts([])
-
-        const uri = props.uri
-
-        if (!uri) {
-            return
-        }
-
-        const response = await fetch(uri + '/' + page())
-
-        if (!response.ok) {
-            return
-        }
-
-        const json = await response.json()
-        setPosts(json.data)
-        setTotal(json.total)
+  onMount(async () => {
+    if (searchParams.page) {
+      const page = parseInt(searchParams.page)
+      setPage(page)
     }
 
-    return (
+    loadPosts()
+  })
+
+  async function loadPosts () {
+    setPosts([])
+
+    const uri = props.uri
+
+    if (!uri) {
+      return
+    }
+
+    const response = await fetch(uri + '/' + page())
+
+    if (!response.ok) {
+      return
+    }
+
+    const json = await response.json()
+    setPosts(json.data)
+    setTotal(json.total)
+  }
+
+  return (
         <>
             <Show when={posts().length === 0}>
                 <NotFound />
@@ -64,5 +64,5 @@ export const Posts: Component<Props> = (props: Props) => {
                 </Show>
             </Show>
         </>
-    )
+  )
 }
