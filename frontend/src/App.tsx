@@ -12,7 +12,7 @@ export function getApiHost (): string {
   return '//localhost:' + import.meta.env.VITE_API_PORT
 }
 
-export function reloadPage () {
+export function reloadPage (): void {
   // TODO this is HACK
 
   setTimeout(() => { location.reload() }, 1000)

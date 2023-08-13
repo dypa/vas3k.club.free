@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "eslint-fix": "eslint --fix --ext .tsx,.ts ./src/*"
+    "eslint-fix": "eslint --fix --ext .tsx,.ts --parser-options project:tsconfig.json ./src/*", //HACK parserOptions.project, see file .eslintrc.json
+    "check-updates": "npx npm-check-updates"
   },
   "license": "MIT",
   "devDependencies": {
@@ -21,7 +22,8 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
-    "@solidjs/router": "^0.8.2",
-    "solid-js": "^1.7.9"
+    "@solidjs/router": "^0.8.3",
+    "npm-check-updates": "^16.11.1",
+    "solid-js": "^1.7.11"
   }
 }
