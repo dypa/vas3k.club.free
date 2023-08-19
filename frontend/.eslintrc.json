@@ -7,7 +7,7 @@
     "plugins": ["solid"], // added
     "extends": ["standard-with-typescript", "plugin:solid/typescript"], // added
     "parserOptions": {
-        "project": ["./frontend/tsconfig.json"], //HACK parserOptions.project
+        "project": ["./frontend/tsconfig.json"], //HACK parserOptions.project, see package.json
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
