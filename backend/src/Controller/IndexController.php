@@ -22,7 +22,7 @@ final class IndexController
     }
 
     #[Route('/go/{id}', methods: ['GET'])]
-    public function go(int $id, ManagerRegistry $doctrine): RedirectResponse
+    public function go(string $id, ManagerRegistry $doctrine): RedirectResponse
     {
         $entityManager = $doctrine->getManager();
         $pageParser = new PostPageParser();
