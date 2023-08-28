@@ -22,7 +22,7 @@ export const Menu: Component = () => {
     setLiked(json.liked)
   })
 
-  async function markAllAsRead () {
+  async function markAllAsRead (): Promise<void> {
     const response = await fetch(getApiHost() + '/api/mark-all-as-read')
 
     if (!response.ok) {

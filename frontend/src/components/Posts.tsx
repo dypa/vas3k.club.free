@@ -22,7 +22,7 @@ export const Posts: Component<Props> = (props: Props) => {
     loadPosts()
   })
 
-  async function loadPosts () {
+  async function loadPosts (): Promise<void> {
     setPosts([])
 
     const uri = props.uri
@@ -43,26 +43,26 @@ export const Posts: Component<Props> = (props: Props) => {
   }
 
   return (
-        <>
-            <Show when={posts().length === 0}>
-                <NotFound />
-            </Show>
+    <>
+      <Show when={posts().length === 0}>
+        <NotFound />
+      </Show>
 
-            <Show when={posts().length > 0}>
-                <ul>
-                    <For each={posts()} fallback={<NotFound />}>
-                        {(post) => <li><Post post={post} /></li>}
-                    </For>
-                </ul>
+      <Show when={posts().length > 0}>
+        <ul>
+          <For each={posts()} fallback={<NotFound />}>
+            {(post) => <li><Post post={post} /></li>}
+          </For>
+        </ul>
 
-                <Show when={total() > page()}>
-                    <div class="center">
-                        <a href={'?page=' + (page() > 0 ? page() - 1 : page())}>◄◄◄</a>
-                        <span> {page() + 1} / {total()} </span>
-                        <a href={'?page=' + (page() + 1 < total() ? page() + 1 : page())}>►►►</a>
-                    </div>
-                </Show>
-            </Show>
-        </>
+        <Show when={total() > page()}>
+          <div class="center">
+            <a href={'?page=' + (page() > 0 ? page() - 1 : page())}>◄◄◄</a>
+            <span> {page() + 1} / {total()} </span>
+            <a href={'?page=' + (page() + 1 < total() ? page() + 1 : page())}>►►►</a>
+          </div>
+        </Show>
+      </Show>
+    </>
   )
 }

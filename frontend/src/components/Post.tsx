@@ -17,7 +17,7 @@ interface Props {
   post: PostType
 }
 
-async function vote (direction: number, id: number) {
+async function vote (direction: number, id: number): Promise<void> {
   const uri = getApiHost() + '/api/vote/' + direction + '/' + id
   const response = await fetch(uri)
 
@@ -26,7 +26,7 @@ async function vote (direction: number, id: number) {
   }
 
   const json = await response.json()
-  if (json != true) {
+  if (json !== true) {
     return
   }
 

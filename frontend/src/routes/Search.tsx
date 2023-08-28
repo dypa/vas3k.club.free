@@ -10,7 +10,7 @@ export const Search: Component = () => {
   const [results, setResults] = createSignal([])
 
   // TODO async so results can be wrong
-  async function loadResults (term: string) {
+  async function loadResults (term: string): Promise<void> {
     setResults([])
 
     term = term.trim()
