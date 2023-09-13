@@ -59,6 +59,16 @@ final class SitemapParser
              AND 
              viewed_at < DATE(\'now\', \'-7 days\') 
         ');
+        $this->connection->executeQuery('
+        UPDATE post SET html = NULL
+        WHERE 
+             deleted_at IS NOT NULL
+             AND 
+             "like" = 0
+             AND 
+             viewed_at < DATE(\'now\', \'-30 days\') 
+        ');
+
         $this->connection->executeQuery('VACUUM');
     }
 
