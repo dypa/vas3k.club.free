@@ -1,4 +1,4 @@
-FROM php:8.2.8-fpm-alpine3.18
+FROM php:8.2.12-fpm-alpine3.18
 
 RUN apk add --no-cache git
 
@@ -16,7 +16,7 @@ RUN echo -e "\n\
     xdebug.trigger_value=PHPSTORM\n\
     xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/99-php-xdebug.ini
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.5.8
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.6.5
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
 
