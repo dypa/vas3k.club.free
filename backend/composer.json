@@ -8,16 +8,16 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-simplexml": "*",
-        "doctrine/doctrine-bundle": "2.11.0",
-        "doctrine/orm": "2.16.2",
+        "doctrine/doctrine-bundle": "2.11.1",
+        "doctrine/orm": "2.17.1",
         "guzzlehttp/guzzle": "7.8.0",
-        "symfony/css-selector": "6.3.2",
-        "symfony/dom-crawler": "6.3.4",
-        "symfony/dotenv": "6.3.7",
+        "symfony/css-selector": "7.0.0",
+        "symfony/dom-crawler": "7.0.0",
+        "symfony/dotenv": "7.0.0",
         "symfony/flex": "2.4.1",
-        "symfony/framework-bundle": "6.3.8",
-        "symfony/runtime": "6.3.2",
-        "symfony/yaml": "6.3.8"
+        "symfony/framework-bundle": "7.0.0",
+        "symfony/runtime": "7.0.0",
+        "symfony/yaml": "7.0.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "*"
@@ -68,7 +68,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.3.*",
+            "require": "7.0.*",
             "docker": false
         }
     }
