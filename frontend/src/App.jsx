@@ -11,13 +11,23 @@ export function getApiHost() {
   return '//localhost:' + import.meta.env.VITE_API_PORT
 }
 
+export async function getProgress() {
+  const response = await fetch(getApiHost() + '/api/progress')
+
+  if (!response.ok) {
+    return
+  }
+
+  const json = await response.json()
+  
+  return json
+}
+
 export function reloadPage() {
   // TODO this is HACK
 
   setTimeout(() => { location.reload() }, 1000)
 }
-
-// routing not works with /:slug, see solidjs/solid-router/issues/264
 
 const App = () => {
   return (
@@ -31,7 +41,7 @@ const App = () => {
       <div class="row">
         <div class="col_12" id="content">
           <Router>
-            <Route path="/new" component={New} />
+            <Route path="/" component={New} />
             <Route path="/updated" component={Updated} />
             <Route path="/favorite" component={Favorite} />
             <Route path="/done" component={Done} />
