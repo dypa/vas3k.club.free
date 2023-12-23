@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from '@solidjs/router'
+import { Route, Router } from '@solidjs/router'
 import type { Component } from 'solid-js'
 
 import { Menu } from './components/Menu'
@@ -31,9 +31,7 @@ const App: Component = () => {
 
       <div class="row">
         <div class="col_12" id="content">
-          <Routes>
-            <Route path="/" element={<Navigate href="/new" />} />
-
+          <Router>
             <Route path="/new" component={New} />
             <Route path="/updated" component={Updated} />
             <Route path="/favorite" component={Favorite} />
@@ -44,7 +42,7 @@ const App: Component = () => {
             <Route path="/scrape" component={Scrape} />
 
             <Route path="*" component={NotFound} />
-          </Routes>
+          </Router>
         </div>
       </div>
 

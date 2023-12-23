@@ -1,4 +1,3 @@
-import { A } from '@solidjs/router'
 import { type Component, createSignal, onMount } from 'solid-js'
 import { getApiHost, reloadPage } from '../App'
 
@@ -36,17 +35,17 @@ export const Menu: Component = () => {
         <menu>
             Open club reader <sup title={(total() - viewed()).toString()}>{viewed()}/{total()}</sup>
             &nbsp;|&nbsp;
-            <A href="/">new</A>
+            <a href="/">new</a>
             &nbsp;|&nbsp;
-            <A href="/updated">updated</A> <sup class="sup" onClick={() => { markAllAsRead() }}>{updated()}</sup>
+            <a href="/updated">updated</a> <sup class="sup" onClick={() => { markAllAsRead() }}>{updated()}</sup>
             &nbsp;|&nbsp;
-            <A href="/favorite">favorite</A> <sup>{liked()}</sup>
+            <a href="/favorite">favorite</a> <sup>{liked()}</sup>
             &nbsp;|&nbsp;
-            <A href="/done">done</A>
+            <a href="/done">done</a>
             &nbsp;|&nbsp;
-            <A href="/search">search</A>
+            <a href="/search">search</a>
             &nbsp;|&nbsp;
-            <A href="/scrape">refresh</A>
+            <a href="/scrape">refresh</a>
         </menu>
   )
 }
