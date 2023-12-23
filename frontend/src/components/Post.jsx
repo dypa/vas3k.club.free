@@ -1,23 +1,7 @@
-import { type Component, createSignal, onMount } from 'solid-js'
+import { createSignal, onMount } from 'solid-js'
 import { getApiHost, reloadPage } from '../App'
 
-export interface PostType {
-  id: string
-  createdAt?: object
-  lastModified: object
-  deletedAt?: object
-  viewedAt?: object
-  postType: string
-  title?: string
-  like: boolean
-  type: string
-}
-
-interface Props {
-  post: PostType
-}
-
-async function vote (direction: number, id: number): Promise<void> {
+async function vote(direction, id) {
   const uri = getApiHost() + '/api/vote/' + direction + '/' + id
   const response = await fetch(uri)
 
@@ -33,8 +17,8 @@ async function vote (direction: number, id: number): Promise<void> {
   reloadPage()
 }
 
-export const Post: Component<Props> = (props: Props) => {
-  const post: PostType = props.post
+export const Post = (props) => {
+  const post = props.post
 
   const [uri, setUri] = createSignal('')
   const [title, setTitle] = createSignal(' 🎁🎁🎁 ' + new Date(post.lastModified.date).toLocaleDateString('ru-RU') + ' 🎁🎁🎁 ')

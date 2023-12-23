@@ -1,13 +1,9 @@
 import { useSearchParams } from '@solidjs/router'
-import { type Component, For, Show, createSignal, onMount } from 'solid-js'
+import { For, Show, createSignal, onMount } from 'solid-js'
 import { NotFound } from './NotFound'
 import { Post } from './Post'
 
-interface Props {
-  uri: string
-}
-
-export const Posts: Component<Props> = (props: Props) => {
+export const Posts = (props) => {
   const [posts, setPosts] = createSignal([])
   const [searchParams, setSearchParams] = useSearchParams()
   const [page, setPage] = createSignal(0)
@@ -22,7 +18,7 @@ export const Posts: Component<Props> = (props: Props) => {
     loadPosts()
   })
 
-  async function loadPosts (): Promise<void> {
+  async function loadPosts() {
     setPosts([])
 
     const uri = props.uri

@@ -13,7 +13,7 @@ services:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
     volumes:
-      - ./frontend:/app #:ro
+      - ./frontend:/app
     environment:
       - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
 
@@ -29,13 +29,6 @@ services:
     restart: unless-stopped       
     volumes:
       - ./backend:/app
-      # - ./backend:/app:ro
-      # - ./backend/var:/app/var:rw
-      # - ./backend/vendor:/app/vendor:rw
-      # - ./backend/composer.lock:/app/composer.lock:rw
-      # - ./backend/symfony.lock:/app/symfony.lock:rw
-      # - ./backend/.php-cs-fixer.cache:/app/.php-cs-fixer.cache:rw
-
 
   nginx:
     container_name: vas3k-club-reader-nginx

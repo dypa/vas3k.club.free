@@ -1,5 +1,4 @@
 import { Route, Router } from '@solidjs/router'
-import type { Component } from 'solid-js'
 
 import { Menu } from './components/Menu'
 import { NotFound } from './components/NotFound'
@@ -8,11 +7,11 @@ import { Done, Favorite, New, Updated } from './routes/Filters'
 import { Scrape } from './routes/Scrape'
 import { Search } from './routes/Search'
 
-export function getApiHost (): string {
+export function getApiHost() {
   return '//localhost:' + import.meta.env.VITE_API_PORT
 }
 
-export function reloadPage (): void {
+export function reloadPage() {
   // TODO this is HACK
 
   setTimeout(() => { location.reload() }, 1000)
@@ -20,7 +19,7 @@ export function reloadPage (): void {
 
 // routing not works with /:slug, see solidjs/solid-router/issues/264
 
-const App: Component = () => {
+const App = () => {
   return (
     <div>
       <div class="row">

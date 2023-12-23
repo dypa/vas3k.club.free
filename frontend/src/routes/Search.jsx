@@ -1,16 +1,16 @@
-import { type Component, For, createSignal, onMount } from 'solid-js'
+import { For, createSignal, onMount } from 'solid-js'
 import { useSearchParams } from '@solidjs/router'
 import { getApiHost } from '../App'
 import { Post } from '../components/Post'
 import { NotFound } from '../components/NotFound'
 
-export const Search: Component = () => {
+export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = createSignal('')
   const [results, setResults] = createSignal([])
 
   // TODO async so results can be wrong
-  async function loadResults (term: string): Promise<void> {
+  async function loadResults(term) {
     setResults([])
 
     term = term.trim()
@@ -41,20 +41,20 @@ export const Search: Component = () => {
   })
 
   return (
-        <>
-            <input
-                autoFocus="1"
-                id="search"
-                type="text"
-                placeholder="Что ищем?!"
-                value={searchQuery()}
-                onInput={async (event) => { await loadResults(event.currentTarget.value) }}
-            />
-            <ul>
-                <For each={results()} fallback={<NotFound />}>
-                    {(post) => <li><Post post={post} /></li>}
-                </For>
-            </ul>
-        </>
+    <>
+      <input
+        autoFocus="1"
+        id="search"
+        type="text"
+        placeholder="Что ищем?!"
+        value={searchQuery()}
+        onInput={async (event) => { await loadResults(event.currentTarget.value) }}
+      />
+      <ul>
+        <For each={results()} fallback={<NotFound />}>
+          {(post) => <li><Post post={post} /></li>}
+        </For>
+      </ul>
+    </>
   )
 }

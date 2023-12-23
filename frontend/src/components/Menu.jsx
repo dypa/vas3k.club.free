@@ -1,7 +1,7 @@
-import { type Component, createSignal, onMount } from 'solid-js'
+import { createSignal, onMount } from 'solid-js'
 import { getApiHost, reloadPage } from '../App'
 
-export const Menu: Component = () => {
+export const Menu = () => {
   const [viewed, setVewed] = createSignal(0)
   const [total, setTotal] = createSignal(0)
   const [updated, setUpdated] = createSignal(0)
@@ -21,7 +21,7 @@ export const Menu: Component = () => {
     setLiked(json.liked)
   })
 
-  async function markAllAsRead (): Promise<void> {
+  async function markAllAsRead () {
     const response = await fetch(getApiHost() + '/api/mark-all-as-read')
 
     if (!response.ok) {
