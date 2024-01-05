@@ -133,7 +133,7 @@ final class PostRepository extends ServiceEntityRepository
     public function markAllAsRead()
     {
         $qb = $this->createQueryBuilder('q');
-        $qb->update(\App\Entity\Post::class, 'q');
+        $qb->update(Post::class, 'q');
 
         $qb->set('q.viewedAt', ':date');
         $qb->setParameter(':date', (new \DateTime())->format('Y-m-d H:i:s'));

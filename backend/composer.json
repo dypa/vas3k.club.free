@@ -13,9 +13,9 @@
         "guzzlehttp/guzzle": "7.8.1",
         "symfony/css-selector": "7.0.0",
         "symfony/dom-crawler": "7.0.0",
-        "symfony/dotenv": "7.0.0",
-        "symfony/flex": "2.4.2",
-        "symfony/framework-bundle": "7.0.1",
+        "symfony/dotenv": "7.0.2",
+        "symfony/flex": "2.4.3",
+        "symfony/framework-bundle": "7.0.2",
         "symfony/runtime": "7.0.0",
         "symfony/yaml": "7.0.0"
     },

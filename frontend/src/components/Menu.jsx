@@ -33,7 +33,7 @@ export const Menu = () => {
     <menu>
       Open club reader <sup title={(total() - viewed()).toString()}>{viewed()}/{total()}</sup>
       &nbsp;|&nbsp;
-      <a href="/">new</a>
+      <a href="/new">new</a>
       &nbsp;|&nbsp;
       <a href="/updated">updated</a> <sup class="sup" onClick={() => { markAllAsRead() }}>{updated()}</sup>
       &nbsp;|&nbsp;

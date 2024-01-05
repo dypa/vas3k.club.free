@@ -26,7 +26,7 @@ export const Scrape = () => {
   return (
     <>
       <Show when={isDone()}>
-        <Navigate href="/new" />
+        <Navigate href="/" />
       </Show>
 
       <Show when={!isDone()}>

@@ -1,4 +1,4 @@
-import { Route, Router } from '@solidjs/router'
+import { Route, Router, Navigate } from '@solidjs/router'
 
 import { Menu } from './components/Menu'
 import { NotFound } from './components/NotFound'
@@ -19,7 +19,7 @@ export async function getProgress() {
   }
 
   const json = await response.json()
-  
+
   return json
 }
 
@@ -41,12 +41,22 @@ const App = () => {
       <div class="row">
         <div class="col_12" id="content">
           <Router>
-            <Route path="/" component={New} />
+            <Route path="/" component={() => <Navigate href="/new" />} />;
+
+            <Route path="/new" component={New} />
+            <Route path="/new/:page" component={New} />
+
             <Route path="/updated" component={Updated} />
+            <Route path="/updated/:page" component={Updated} />
+
             <Route path="/favorite" component={Favorite} />
+            <Route path="/favorite/:page" component={Favorite} />
+
             <Route path="/done" component={Done} />
+            <Route path="/done/:page" component={Done} />
 
             <Route path="/search" component={Search} />
+            <Route path="/search/:page" component={Search} />
 
             <Route path="/scrape" component={Scrape} />
 

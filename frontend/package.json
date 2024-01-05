@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "check-updates": "npx npm-check-updates"
+    "check-updates": "npx npm-check-updates",
+    "update-packages": "npx npm-check-updates -u"
   },
   "license": "MIT",
   "devDependencies": {    

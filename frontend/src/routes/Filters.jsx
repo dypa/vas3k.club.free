@@ -1,30 +1,26 @@
-import { getApiHost } from '../App'
-import { Posts } from '../components/Posts'
 
-function generateUri(type) {
-  return getApiHost() + '/api/filter/' + type
-}
+import { Posts } from '../components/Posts'
 
 export const New = () => {
   return (
-    <Posts uri={generateUri('new')} />
+    <Posts type='new' />
   )
 }
 
 export const Done = () => {
   return (
-    <Posts uri={generateUri('done')} />
+    <Posts type='done' />
   )
 }
 
 export const Updated = () => {
   return (
-    <Posts uri={generateUri('updated')} />
+    <Posts type='updated' />
   )
 }
 
 export const Favorite = () => {
   return (
-    <Posts uri={generateUri('favorite')} />
+    <Posts type='favorite' />
   )
 }
