@@ -9,7 +9,7 @@
         "ext-iconv": "*",
         "ext-simplexml": "*",
         "doctrine/doctrine-bundle": "2.11.1",
-        "doctrine/orm": "2.17.2",
+        "doctrine/orm": "2.17.3",
         "guzzlehttp/guzzle": "7.8.1",
         "symfony/css-selector": "7.0.0",
         "symfony/dom-crawler": "7.0.0",
