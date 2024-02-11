@@ -27,14 +27,14 @@ final class PostRepository extends ServiceEntityRepository
     private function createQueryBuilderExcludeSomeTypesAndNot404(): QueryBuilder
     {
         $qb = $this->createQueryBuilder('q');
-        $qb->select([
+        $qb->select(implode(',', [
             'q.id',
             'q.createdAt',
             'q.lastModified',
             'q.like',
             'q.title',
             'q.postType',
-        ]);
+        ]));
         $qb->where($qb->expr()->notIn('q.postType', [PostType::INTRO->value, PostType::WEEKLY_DIGEST->value]));
         $qb->andWhere($qb->expr()->isNull('q.deletedAt'));
 

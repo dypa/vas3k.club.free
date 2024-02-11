@@ -29,14 +29,11 @@ use Doctrine\ORM\Mapping as ORM;
     #[ORM\Column(nullable: true)]
     public ?\DateTime $viewedAt;
 
-    // TODO enumType не нужен в аттрибуте, но без него не работает
-    #[ORM\Column(enumType: PostType::class)]
+    #[ORM\Column]
     public PostType $postType;
 
     #[ORM\Column(nullable: true)]
     public ?string $title;
-
-    // TODO move to Favorite
 
     #[ORM\Column]
     public bool $like = false;
