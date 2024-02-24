@@ -1,5 +1,5 @@
-import { useParams, A } from '@solidjs/router'
-import { For, Show, createSignal, onMount, createResource, Suspense } from 'solid-js'
+import { useParams, A, useNavigate } from '@solidjs/router'
+import { For, Show, createSignal, createResource, Suspense } from 'solid-js'
 import { NotFound } from './NotFound'
 import { Post } from './Post'
 import { getApiHost } from '../App'
@@ -9,6 +9,8 @@ function generateUri(type) {
 }
 
 export const Posts = (props) => {
+  const navigate = useNavigate();
+  
   const [type, setType] = createSignal(props.type)
 
   const params = useParams();
@@ -19,7 +21,7 @@ export const Posts = (props) => {
     setPage(parseInt(params.page))
   }
 
-  const [posts] = createResource(page(), loadPosts)
+  const [posts] = createResource(page, loadPosts)
 
   async function loadPosts(page) {
     const response = await fetch(generateUri(type()) + '/' + page)
@@ -33,6 +35,11 @@ export const Posts = (props) => {
     return json.data
   }
 
+  function nav(page) {
+    setPage(page)
+    navigate('/' + type() + '/' + page, { replace: true })
+  }
+
   return (
     <Suspense fallback={<NotFound />}>
       <ul>
@@ -43,9 +50,9 @@ export const Posts = (props) => {
 
       <Show when={total() > page()}>
         <div class="center">
-          <A href={'/' + type() + '/' + (page() > 0 ? page() - 1 : page())}>◄◄◄</A>
+          <a onClick={() => {nav((page() > 0 ? page() - 1 : page()))}} >◄◄◄</a>
           <span> {page() + 1} / {total()} </span>
-          <A href={'/' + type() + '/' +  (page() + 1 <= total() ? page() + 1 : page())}>►►►</A>
+          <a onClick={() => {nav((page() + 1 <= total() ? page() + 1 : page()))}} >►►►</a>
         </div>
       </Show>
     </Suspense>
