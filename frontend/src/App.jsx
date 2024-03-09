@@ -11,18 +11,6 @@ export function getApiHost() {
   return '//localhost:' + import.meta.env.VITE_API_PORT
 }
 
-export async function getProgress() {
-  const response = await fetch(getApiHost() + '/api/progress')
-
-  if (!response.ok) {
-    return
-  }
-
-  const json = await response.json()
-
-  return json
-}
-
 export function reloadPage() {
   // TODO this is HACK
 

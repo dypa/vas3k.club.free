@@ -1,5 +1,5 @@
 import { createSignal, onMount } from 'solid-js'
-import { getApiHost, getProgress } from '../App'
+import { getApiHost } from '../App'
 
 export const Menu = () => {
   const [viewed, setVewed] = createSignal(0)
@@ -12,7 +12,13 @@ export const Menu = () => {
   })
 
   async function updateProgress() {
-    const json = await getProgress()
+    const response = await fetch(getApiHost() + '/api/progress')
+
+    if (!response.ok) {
+      return
+    }
+
+    const json = await response.json()
     setVewed(json.viewed)
     setTotal(json.total)
     setUpdated(json.updated)

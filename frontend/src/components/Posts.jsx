@@ -1,4 +1,4 @@
-import { useParams, A, useNavigate } from '@solidjs/router'
+import { useParams, useNavigate } from '@solidjs/router'
 import { For, Show, createSignal, createResource, Suspense } from 'solid-js'
 import { NotFound } from './NotFound'
 import { Post } from './Post'
