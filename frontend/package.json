@@ -8,14 +8,14 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "check-updates": "npx npm-check-updates",
-    "update-packages": "npx npm-check-updates -u"
+    "check-updates": "bunx npm-check-updates",
+    "update-packages": "bunx npm-check-updates -u"
   },
   "license": "MIT",
   "devDependencies": {    
-    "npm-check-updates": "16.14.15",
-    "vite": "5.1.5",
-    "vite-plugin-solid": "2.10.1"
+    "npm-check-updates": "16.14.17",
+    "vite": "5.1.6",
+    "vite-plugin-solid": "2.10.2"
   },
   "dependencies": {
     "@solidjs/router": "0.13.0",

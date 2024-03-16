@@ -1,5 +1,5 @@
-FROM node:20.11.0-alpine3.18
+FROM oven/bun:1.0.31-slim
 
 EXPOSE 3000
 WORKDIR /app
-CMD ["npm", "run", "dev", "--", "--host"]
+ENTRYPOINT [ "bun", "run", "dev", "--", "--host" ]
