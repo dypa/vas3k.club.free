@@ -1,23 +1,5 @@
-version: '3.9'
-
 #container_name used because i use external bash script
 services:
-  web:
-    container_name: vas3k-club-reader-web
-    depends_on: 
-      - api
-      - nginx
-    build:
-      context: frontend
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    restart: unless-stopped
-    volumes:
-      - ./frontend:/app
-    environment:
-      - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
-
-
   api:
     container_name: vas3k-club-reader-api
     depends_on:
@@ -31,12 +13,36 @@ services:
       - ./backend:/app
 
   nginx:
-    container_name: vas3k-club-reader-nginx
     image: nginx:1.25.4
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./frontend:/app
     restart: unless-stopped
     environment:
       TZ: Europe/Moscow
     ports:
       - ${VAS3K_CLUB_PORT:-3000}:80
+
+  bun:
+    image: oven/bun:1.0.35-slim
+    command: sh -c "cd /app && bun i --frozen-lockfile && bun run build"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
+    profiles:
+      - install
+
+  dev-server:
+    depends_on: 
+      - api
+    build:
+      context: frontend
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
+    profiles:
+      - dev

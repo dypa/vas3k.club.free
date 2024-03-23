@@ -16,7 +16,7 @@ RUN echo -e "\n\
     xdebug.trigger_value=PHPSTORM\n\
     xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/99-php-xdebug.ini
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.6.5
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.7.2
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
 
