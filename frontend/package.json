@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "npm-check-updates": "*",
-    "vite": "5.2.3",
+    "vite": "5.2.7",
     "vite-plugin-solid": "2.10.2"
   },
   "dependencies": {

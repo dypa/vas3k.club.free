@@ -1,6 +1,6 @@
-FROM oven/bun:1.0.35-slim 
+FROM oven/bun:1.1.0-alpine
 
 EXPOSE 3000
 WORKDIR /app
 
-ENTRYPOINT [ "bun", "run", "dev", "--", "--host" ]
+#CMD [ "bun", "run", "dev", "--", "--host" ]

@@ -24,7 +24,9 @@ services:
       - ${VAS3K_CLUB_PORT:-3000}:80
 
   bun:
-    image: oven/bun:1.0.35-slim
+    # image: oven/bun:1.0.35-slim
+    build:
+      context: frontend
     command: sh -c "cd /app && bun i --frozen-lockfile && bun run build"
     volumes:
       - ./frontend:/app
@@ -38,6 +40,7 @@ services:
       - api
     build:
       context: frontend
+    command: sh -c "cd /app && bun run dev --host"  
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

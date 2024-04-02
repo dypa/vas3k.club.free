@@ -12,10 +12,12 @@ class CorsSubscriber implements EventSubscriberInterface
     {
         $response = $event->getResponse();
 
-        $response->headers->set('Access-Control-Allow-Origin', '*');
+        if (!$response->headers->has('Access-Control-Allow-Origin')) {
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+        }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::RESPONSE => 'onKernelResponse',
