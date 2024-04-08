@@ -8,13 +8,12 @@
     "dev": "vite",
     "build": "vite build" ,
     "serve": "vite preview",
-    "check-updates": "bunx npm-check-updates",
-    "update-packages": "bunx npm-check-updates -u"
+    "upd": "bunx npm-check-updates -u"
   },
   "license": "MIT",
   "devDependencies": {
     "npm-check-updates": "*",
-    "vite": "5.2.7",
+    "vite": "5.2.8",
     "vite-plugin-solid": "2.10.2"
   },
   "dependencies": {

@@ -9,7 +9,7 @@ COPY dphp /usr/bin/dphp
 RUN chmod +x /usr/bin/dphp
 
 ENV XDEBUG_MODE=debug
-ENV PHP_IDE_CONFIG="serverName=vas3k-club-reader"
+ENV PHP_IDE_CONFIG="serverName=vas3k-club-reader"   
 RUN echo -e "\n\
     xdebug.discover_client_host=false\n\
     xdebug.start_with_request=trigger\n\
