@@ -9,15 +9,15 @@
         "ext-iconv": "*",
         "ext-simplexml": "*",
         "doctrine/doctrine-bundle": "2.12.0",
-        "doctrine/orm": "3.1.1",
+        "doctrine/orm": "3.1.3",
         "guzzlehttp/guzzle": "7.8.1",
-        "symfony/css-selector": "7.0.3",
-        "symfony/dom-crawler": "7.0.4",
-        "symfony/dotenv": "7.0.4",
+        "symfony/css-selector": "7.0.7",
+        "symfony/dom-crawler": "7.0.7",
+        "symfony/dotenv": "7.0.7",
         "symfony/flex": "2.4.5",
-        "symfony/framework-bundle": "7.0.6",
-        "symfony/runtime": "7.0.3",
-        "symfony/yaml": "7.0.3"
+        "symfony/framework-bundle": "7.0.7",
+        "symfony/runtime": "7.0.7",
+        "symfony/yaml": "7.0.7"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "*"
