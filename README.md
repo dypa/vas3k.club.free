@@ -8,4 +8,4 @@
 
 ## Обновление пакетов
 `composer oudated`
-`bun run upd`
+`bun run update`
