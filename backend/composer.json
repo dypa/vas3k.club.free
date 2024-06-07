@@ -11,13 +11,13 @@
         "doctrine/doctrine-bundle": "2.12.0",
         "doctrine/orm": "3.2.0",
         "guzzlehttp/guzzle": "7.8.1",
-        "symfony/css-selector": "7.0.7",
-        "symfony/dom-crawler": "7.0.7",
-        "symfony/dotenv": "7.0.7",
+        "symfony/css-selector": "7.1.1",
+        "symfony/dom-crawler": "7.1.1",
+        "symfony/dotenv": "7.1.1",
         "symfony/flex": "2.4.5",
-        "symfony/framework-bundle": "7.0.7",
-        "symfony/runtime": "7.0.7",
-        "symfony/yaml": "7.0.7"
+        "symfony/framework-bundle": "7.1.1",
+        "symfony/runtime": "7.1.1",
+        "symfony/yaml": "7.1.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "*"
@@ -68,7 +68,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.0.*",
+            "require": "7.1.*",
             "docker": false
         }
     }
