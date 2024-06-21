@@ -1,4 +1,4 @@
-FROM php:8.3.7-fpm-alpine3.19
+FROM php:8.3.8-fpm-alpine3.19
 
 RUN apk add --no-cache git
 
@@ -17,7 +17,7 @@ RUN echo -e "\n\
     xdebug.client_host=host.docker.internal\n\
     xdebug.client_port=9003\n" >> /usr/local/etc/php/conf.d/99-php-xdebug.ini
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.7.2
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.7.7
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
 
