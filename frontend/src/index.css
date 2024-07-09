@@ -110,8 +110,9 @@ menu .sup {
 }
 
 #search {
-    margin: 10px;
-    width: 400px;
+    margin: 30px;
+    width: 90%;
+    font-size: medium;
 }
 
 #nyancat {

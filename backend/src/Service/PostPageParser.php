@@ -43,6 +43,21 @@ final class PostPageParser
         $post->title = $title;
         $post->html = $html;
 
+        $post->searchIndex = $post->title;
+        $filters = [
+            'article .text-body',
+            '.comment-body',
+            '.post-type-battle .text-body',
+        ];
+        foreach ($filters as $filter) {
+            $result = $crawler->filter($filter);
+            if ($result->count() > 0) {
+                $post->searchIndex .= $result->text().PHP_EOL;
+            }
+        }
+
+        $post->searchIndex = mb_strtolower($post->searchIndex);
+
         return $post;
     }
 

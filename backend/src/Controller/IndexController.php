@@ -6,6 +6,7 @@ use App\Repository\PostRepository;
 use App\Service\PostPageParser;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -49,5 +50,16 @@ final class IndexController
         $entityManager->flush();
 
         return new RedirectResponse($url);
+    }
+
+    #[Route('/html/{id}', methods: ['GET'])]
+    public function html(string $id, ManagerRegistry $doctrine): Response
+    {
+        $post = $this->postRepository->find($id);
+        if (!$post) {
+            throw new NotFoundHttpException();
+        }
+
+        return new Response($post->html);
     }
 }

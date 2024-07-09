@@ -40,4 +40,7 @@ use Doctrine\ORM\Mapping as ORM;
 
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $html;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $searchIndex;
 }

@@ -50,26 +50,7 @@ final class SitemapParser
 
         $this->entityManager->flush();
 
-        $this->connection->executeQuery('
-        UPDATE post SET html = NULL
-        WHERE 
-             deleted_at IS NULL
-             AND 
-             "like" = 0
-             AND 
-             viewed_at < DATE(\'now\', \'-7 days\') 
-        ');
-        $this->connection->executeQuery('
-        UPDATE post SET html = NULL
-        WHERE 
-             deleted_at IS NOT NULL
-             AND 
-             "like" = 0
-             AND 
-             viewed_at < DATE(\'now\', \'-30 days\') 
-        ');
-
-        $this->connection->executeQuery('VACUUM');
+        // $this->vacuum();
     }
 
     private function getSitemap(): string
@@ -107,7 +88,7 @@ final class SitemapParser
         SELECT 
             s.clubId
         FROM temp.sitemap AS s
-         LEFT JOIN post AS p ON s.clubId = p.id
+            LEFT JOIN post AS p ON s.clubId = p.id
         WHERE 
             p.id IS NULL
         ');
@@ -134,7 +115,7 @@ final class SitemapParser
         SELECT 
             s.clubId
         FROM temp.sitemap AS s
-         LEFT JOIN post AS p ON s.clubId = p.id
+            LEFT JOIN post AS p ON s.clubId = p.id
         WHERE 
             p.last_modified <> s.lastmod
         ');
@@ -156,7 +137,7 @@ final class SitemapParser
         SELECT 
             p.id
         FROM temp.sitemap AS s
-         RIGHT JOIN post AS p ON s.clubId = p.id
+            RIGHT JOIN post AS p ON s.clubId = p.id
         WHERE 
             s.clubId IS NULL and p.deleted_at IS NULL
         ');
@@ -165,5 +146,32 @@ final class SitemapParser
             $entity = $this->postRepository->findOneBy(['id' => $record['id']]);
             $entity->deletedAt = new \DateTime();
         }
+    }
+
+    /**
+     * TODO disabled because has /html/:id route.
+     */
+    private function vacuum(): void
+    {
+        $this->connection->executeQuery('
+        UPDATE post SET html = NULL
+        WHERE 
+            deleted_at IS NULL
+            AND 
+            "like" = 0
+            AND 
+            viewed_at < DATE(\'now\', \'-7 days\') 
+        ');
+        $this->connection->executeQuery('
+        UPDATE post SET html = NULL
+        WHERE 
+            deleted_at IS NOT NULL
+            AND 
+            "like" = 0
+            AND 
+            viewed_at < DATE(\'now\', \'-30 days\') 
+        ');
+
+        $this->connection->executeQuery('VACUUM');
     }
 }

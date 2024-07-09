@@ -50,7 +50,6 @@ final class PostRepository extends ServiceEntityRepository
         $qb->select('q.id');
         $qb->andWhere('q.lastModified < :updated');
         $qb->setParameter('updated', date('Y-m-d', strtotime('-1 week')));
-        // /$qb->setFirstResult(860);
 
         return $qb->getQuery()->getSingleColumnResult();
     }
@@ -114,16 +113,14 @@ final class PostRepository extends ServiceEntityRepository
     }
 
     /**
-     * @todo
-     *
      * @return Post[]
      */
     public function search(string $word): array
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->andWhere($qb->expr()->like(
-            'q.title',
-            $qb->expr()->literal('%'.str_replace(['%', '?'], '', $word).'%')
+            'q.searchIndex',
+            $qb->expr()->literal('%'.str_replace(['%', '?'], '', mb_strtolower($word)).'%')
         ));
         $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
 
@@ -142,5 +139,14 @@ final class PostRepository extends ServiceEntityRepository
         $qb->andWhere('q.deletedAt is NULL');
 
         return $qb->getQuery()->execute();
+    }
+
+    public function findAllIterator()
+    {
+        $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
+        $qb->select('q.id');
+        $qb->andWhere($qb->expr()->isNull('q.searchIndex'));
+
+        return $qb->getQuery()->toIterable();
     }
 }
