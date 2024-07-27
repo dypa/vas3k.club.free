@@ -141,6 +141,7 @@ final class PostRepository extends ServiceEntityRepository
         return $qb->getQuery()->execute();
     }
 
+    // TODO q.lastModified > 7days
     public function findAllIterator()
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
