@@ -13,7 +13,7 @@ services:
       - ./backend:/app
 
   nginx:
-    image: nginx:1.25.5-alpine3.19
+    image: nginx:1.27.0-alpine3.19-slim
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./frontend:/app

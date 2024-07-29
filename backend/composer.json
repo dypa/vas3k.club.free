@@ -10,7 +10,7 @@
         "ext-simplexml": "*",
         "doctrine/doctrine-bundle": "2.12.0",
         "doctrine/orm": "3.2.1",
-        "guzzlehttp/guzzle": "7.8.1",
+        "guzzlehttp/guzzle": "7.9.2",
         "symfony/css-selector": "7.1.1",
         "symfony/dom-crawler": "7.1.1",
         "symfony/dotenv": "7.1.3",

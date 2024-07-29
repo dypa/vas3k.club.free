@@ -1,7 +1,7 @@
 docker compose build
 docker compose build bun dev-server
 
-docker compose up -d
+docker compose up -d --build
 
 docker compose run --rm bun
 docker exec vas3k-club-reader-api composer install

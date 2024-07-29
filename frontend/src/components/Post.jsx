@@ -34,12 +34,16 @@ export const Post = (props) => {
     <>
       {!isNew() && !post.like && <span><a title='👍' onClick={() => { vote(1, parseInt(post.id)) }} style={{ cursor: 'pointer' }}>🔥</a>&nbsp;</span>}
       {!isNew() && post.like && <span><a title='👎' onClick={() => { vote(2, parseInt(post.id)) }} style={{ cursor: 'pointer' }}>🌚</a>&nbsp;</span>}
-      &nbsp;&nbsp;&nbsp;
-      <a
-        class="cache"
-        target="_blank"
-        href={getApiHost() + '/html/' + post.id}
-      >🌐</a>
+      {!isNew() &&
+        <span>
+          &nbsp;&nbsp;&nbsp;
+          <a
+            class="cache"
+            target="_blank"
+            href={getApiHost() + '/html/' + post.id}
+          >🌐</a>
+        </span>}
+
       &nbsp;&nbsp;&nbsp;
       <a
         class="go"

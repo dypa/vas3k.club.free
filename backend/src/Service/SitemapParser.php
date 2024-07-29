@@ -24,6 +24,7 @@ final class SitemapParser
     ) {
     }
 
+    // TODO refactor SQL logic to repository
     public function __invoke(): void
     {
         $content = $this->getSitemap();
@@ -150,6 +151,7 @@ final class SitemapParser
 
     /**
      * TODO disabled because has /html/:id route.
+     * TODO remove search index.
      */
     private function vacuum(): void
     {
