@@ -7,6 +7,7 @@ use App\Enum\PostType;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Symfony\Component\DomCrawler\Crawler;
+use voku\helper\HtmlMin;
 
 final class PostPageParser
 {
@@ -39,7 +40,12 @@ final class PostPageParser
 
         $post->createdAt = \DateTime::createFromFormat('d m Y', $date);
         $post->title = $title;
-        $post->html = $html;
+
+        $minifier = new HtmlMin;
+        $html = str_replace('href="/', 'href="https://vas3k.club/', $html);
+        $errorLevel = error_reporting(0);
+        $post->html = $minifier->minify($html);
+        error_reporting($errorLevel);
 
         $post->searchIndex = $post->title;
         $filters = [

@@ -147,6 +147,10 @@ final class PostRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->select('q.id');
         $qb->andWhere($qb->expr()->isNull('q.searchIndex'));
+        
+        // $qb->addOrderBy('q.id', 'ASC');
+        // $qb->setFirstResult(4000);
+        // $qb->setMaxResults(500);
 
         return $qb->getQuery()->toIterable();
     }
