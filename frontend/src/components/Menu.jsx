@@ -45,6 +45,8 @@ export const Menu = () => {
       &nbsp;|&nbsp;
       <a href="/favorite">favorite</a> <sup>{liked()}</sup>
       &nbsp;|&nbsp;
+      <a href="/deleted">deleted</a>
+      &nbsp;|&nbsp;
       <a href="/done">done</a>
       &nbsp;|&nbsp;
       <a href="/search">search</a>

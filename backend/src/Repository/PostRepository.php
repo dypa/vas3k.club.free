@@ -24,7 +24,7 @@ final class PostRepository extends ServiceEntityRepository
         return self::POST_PEER_PAGE;
     }
 
-    private function createQueryBuilderExcludeSomeTypesAndNot404(): QueryBuilder
+    private function createQueryBuilderExcludeSomeTypes(): QueryBuilder
     {
         $qb = $this->createQueryBuilder('q');
         $qb->select(implode(',', [
@@ -36,6 +36,13 @@ final class PostRepository extends ServiceEntityRepository
             'q.postType',
         ]));
         $qb->where($qb->expr()->notIn('q.postType', [PostType::INTRO->value, PostType::WEEKLY_DIGEST->value]));
+
+        return $qb;
+    }
+
+    private function createQueryBuilderExcludeSomeTypesAndNot404(): QueryBuilder
+    {
+        $qb = $this->createQueryBuilderExcludeSomeTypes();
         $qb->andWhere($qb->expr()->isNull('q.deletedAt'));
 
         return $qb;
@@ -82,6 +89,18 @@ final class PostRepository extends ServiceEntityRepository
                 $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
                 break;
         }
+
+        $qb->setFirstResult($page * $this->getPostsPeerPage());
+        $qb->setMaxResults($this->getPostsPeerPage());
+
+        return new Paginator($qb);
+    }
+
+    public function deleted(int $page): Paginator
+    {
+        $qb = $this->createQueryBuilderExcludeSomeTypes();
+        $qb->andWhere($qb->expr()->isNotNull('q.deletedAt'));
+        $qb->andWhere($qb->expr()->isNotNull('q.html'));
 
         $qb->setFirstResult($page * $this->getPostsPeerPage());
         $qb->setMaxResults($this->getPostsPeerPage());
@@ -147,7 +166,7 @@ final class PostRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->select('q.id');
         $qb->andWhere($qb->expr()->isNull('q.searchIndex'));
-        
+
         // $qb->addOrderBy('q.id', 'ASC');
         // $qb->setFirstResult(4000);
         // $qb->setMaxResults(500);

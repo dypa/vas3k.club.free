@@ -3,7 +3,7 @@ import { Route, Router, Navigate } from '@solidjs/router'
 import { Menu } from './components/Menu'
 import { NotFound } from './components/NotFound'
 
-import { Done, Favorite, New, Updated } from './routes/Filters'
+import { Done, Favorite, New, Updated, Deleted } from './routes/Filters'
 import { Scrape } from './routes/Scrape'
 import { Search } from './routes/Search'
 
@@ -42,6 +42,9 @@ const App = () => {
 
             <Route path="/done" component={Done} />
             <Route path="/done/:page" component={Done} />
+
+            <Route path="/deleted" component={Deleted} />
+            <Route path="/deleted/:page" component={Deleted} />
 
             <Route path="/search" component={Search} />
             <Route path="/search/:page" component={Search} />

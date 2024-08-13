@@ -24,3 +24,9 @@ export const Favorite = () => {
     <Posts type='favorite' />
   )
 }
+
+export const Deleted = () => {
+  return (
+    <Posts type='deleted' />
+  )
+}

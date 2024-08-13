@@ -35,8 +35,21 @@ final class ApiController
     #[Route('/filter/{type}/{page}', methods: ['GET'], requirements: ['type' => '(new|updated|done|favorite)'], defaults: ['page' => 0])]
     public function filter(string $type, string $page): JsonResponse
     {
-        $paginator = $this->postRepository->filter($type, $page); // {'find' . $type}($page);
+        $paginator = $this->postRepository->filter($type, $page);
 
+        return $this->createResponseFromPaginator($paginator);
+    }
+
+    #[Route('/filter/deleted/{page}', methods: ['GET'], defaults: ['page' => 0])]
+    public function deleted(string $page): JsonResponse
+    {
+        $paginator = $this->postRepository->deleted($page);
+
+        return $this->createResponseFromPaginator($paginator);
+    }
+
+    private function createResponseFromPaginator($paginator): JsonResponse
+    {
         $paginator->setUseOutputWalkers(false);
 
         return new JsonResponse([
