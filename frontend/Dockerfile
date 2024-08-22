@@ -1,4 +1,4 @@
-FROM oven/bun:1.1.22-alpine
+FROM oven/bun:1.1.25-alpine
 
 EXPOSE 3000
 WORKDIR /app
