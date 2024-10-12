@@ -12,11 +12,8 @@ body {
 }
 
 .col_12,
-.col_9,
-.col_8,
-.col_6,
-.col_4,
-.col_3 {
+.col_10,
+.col_1 {
     margin-left: 10px;
     margin-right: 10px;
     display: inline;
@@ -27,24 +24,12 @@ body {
     width: 940px;
 }
 
-.col_9 {
-    width: 620px;
+.col_10 {
+    width: 800px;
 }
 
-.col_8 {
-    width: 700px;
-}
-
-.col_6 {
-    width: 460px;
-}
-
-.col_4 {
-    width: 220px;
-}
-
-.col_3 {
-    width: 300px;
+.col_1 {
+    width: 80px;
 }
 
 /**
@@ -71,6 +56,7 @@ a:visited {
 menu {
     font-weight: bold;
     font-size: x-large;
+    padding-left: 90px;
 }
 
 menu span {

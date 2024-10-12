@@ -27,7 +27,8 @@ const App = () => {
       </div>
 
       <div class="row">
-        <div class="col_12" id="content">
+        <div class="col_1">&nbsp;</div>
+        <div class="col_10" id="content">
           <Router>
             <Route path="/" component={() => <Navigate href="/new" />} />;
 
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="*" component={NotFound} />
           </Router>
         </div>
+        <div class="col_1">&nbsp;</div>
       </div>
 
       <div class="row">
