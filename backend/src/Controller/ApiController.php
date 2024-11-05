@@ -32,7 +32,7 @@ final class ApiController
         ]);
     }
 
-    #[Route('/filter/{type}/{page}', methods: ['GET'], requirements: ['type' => '(new|updated|done|favorite)'], defaults: ['page' => 0])]
+    #[Route('/filter/{type}/{page}', methods: ['GET'], requirements: ['type' => '(new|updated|done|favorite)', 'page' => '\d+'], defaults: ['page' => 0])]
     public function filter(string $type, string $page): JsonResponse
     {
         $paginator = $this->postRepository->filter($type, $page);
@@ -40,7 +40,7 @@ final class ApiController
         return $this->createResponseFromPaginator($paginator);
     }
 
-    #[Route('/filter/deleted/{page}', methods: ['GET'], defaults: ['page' => 0])]
+    #[Route('/filter/deleted/{page}', methods: ['GET'], defaults: ['page' => 0], requirements: ['page' => '\d+'])]
     public function deleted(string $page): JsonResponse
     {
         $paginator = $this->postRepository->deleted($page);
@@ -58,7 +58,7 @@ final class ApiController
         ]);
     }
 
-    #[Route('/vote/{typeId}/{postId}', methods: ['GET'])]
+    #[Route('/vote/{typeId}/{postId}', methods: ['GET'], requirements: ['typeId' => '\d+', 'postId' => '\d+'])]
     public function vote(int $typeId, int $postId, ManagerRegistry $doctrine): JsonResponse
     {
         $entityManager = $doctrine->getManager();

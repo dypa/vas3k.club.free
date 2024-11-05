@@ -22,7 +22,7 @@ final class IndexController
         return new NotFoundHttpException();
     }
 
-    #[Route('/go/{id}', methods: ['GET'])]
+    #[Route('/go/{id}', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function go(string $id, ManagerRegistry $doctrine): RedirectResponse
     {
         $entityManager = $doctrine->getManager();
@@ -52,7 +52,7 @@ final class IndexController
         return new RedirectResponse($url);
     }
 
-    #[Route('/html/{id}', methods: ['GET'])]
+    #[Route('/html/{id}', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function html(string $id, ManagerRegistry $doctrine): Response
     {
         $post = $this->postRepository->find($id);

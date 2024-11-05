@@ -11,6 +11,10 @@ services:
     restart: unless-stopped       
     volumes:
       - ./backend:/app
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.sitemap.schedule: "@every 30m"
+      ofelia.job-exec.sitemap.command: "bin/console app:sitemap"
 
   nginx:
     image: nginx:1.27.0-alpine3.19-slim
@@ -48,3 +52,12 @@ services:
       - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
     profiles:
       - dev
+
+  #docs https://github.com/mcuadros/ofelia
+  ofelia:
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - api
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
