@@ -1,6 +1,3 @@
-docker compose run --detach dev-server 
-docker compose exec dev-server bun run update
-docker compose exec api composer update
-docker compose kill dev-server
-#docker compose stop -t 1 dev-server
-docker compose exec api composer outdated
+docker compose run --rm dev-server bun run update
+docker compose run --rm api composer update
+docker compose run --rm api composer outdated

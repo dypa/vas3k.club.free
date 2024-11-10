@@ -13,7 +13,7 @@ services:
       - ./backend:/app
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.sitemap.schedule: "@every 30m"
+      ofelia.job-exec.sitemap.schedule: "@every 4h"
       ofelia.job-exec.sitemap.command: "bin/console app:sitemap"
 
   nginx:
@@ -51,7 +51,7 @@ services:
     environment:
       - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
     profiles:
-      - dev
+      - localhost-only
 
   #docs https://github.com/mcuadros/ofelia
   ofelia:

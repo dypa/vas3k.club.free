@@ -26,14 +26,17 @@ class BuildSearchIndexCommand extends Command
         $pageParser = new PostPageParser();
 
         $i = 0;
-        foreach ($this->postRepository->findAllIterator() as $array) {
-            $post = $this->postRepository->findOneById($array['id']);
-            $post = $pageParser->crawlAndSave($post);
+        foreach ($this->postRepository->getForDbUpdate() as $array) {
+            $pageParser->crawlAndSave($this->postRepository->findOneById($array['id']));
             ++$i;
-            if ($i > 25) {
-                $entityManager->flush();
-                $i = 0;
+            if (0 == $i % 5) {
                 echo '.';
+            }
+            if ($i > 50) {
+                $entityManager->flush();
+                $entityManager->clear();
+                $i = 0;
+                echo '|';
             }
         }
 

@@ -48,19 +48,6 @@ final class PostRepository extends ServiceEntityRepository
         return $qb;
     }
 
-    /**
-     * @return Post[]
-     */
-    public function getForDbUpdate()
-    {
-        $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
-        $qb->select('q.id');
-        $qb->andWhere('q.lastModified < :updated');
-        $qb->setParameter('updated', date('Y-m-d', strtotime('-1 week')));
-
-        return $qb->getQuery()->getSingleColumnResult();
-    }
-
     public function filter(string $type, int $page): Paginator
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
@@ -160,16 +147,24 @@ final class PostRepository extends ServiceEntityRepository
         return $qb->getQuery()->execute();
     }
 
-    // TODO q.lastModified > 7days
     public function findAllIterator()
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->select('q.id');
-        $qb->andWhere($qb->expr()->isNull('q.searchIndex'));
 
-        // $qb->addOrderBy('q.id', 'ASC');
-        // $qb->setFirstResult(4000);
-        // $qb->setMaxResults(500);
+        return $qb->getQuery()->toIterable();
+    }
+
+    /**
+     * @return Post[]
+     */
+    public function getForDbUpdate()
+    {
+        $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
+        $qb->select('q.id');
+        $qb->andWhere('q.lastModified < :updated');
+        $qb->setParameter('updated', date('Y-m-d', strtotime('-1 week')));
+        $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
 
         return $qb->getQuery()->toIterable();
     }

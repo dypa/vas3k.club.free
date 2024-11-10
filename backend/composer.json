@@ -16,7 +16,7 @@
         "symfony/dotenv": "7.1.6",
         "symfony/flex": "2.4.7",
         "symfony/framework-bundle": "7.1.6",
-        "symfony/runtime": "7.1.6",
+        "symfony/runtime": "7.1.7",
         "symfony/yaml": "7.1.6",
         "voku/html-min": "*"
     },
