@@ -1,7 +1,5 @@
-#container_name used because i use external bash script
 services:
   api:
-    container_name: vas3k-club-reader-api
     depends_on:
       - nginx
     build: 
@@ -11,6 +9,11 @@ services:
     restart: unless-stopped       
     volumes:
       - ./backend:/app
+    environment:
+      TZ: ${TZ:-Europe/Moscow}
+      XDEBUG_CONFIG: ${XDEBUG_CONFIG:-idekey=PHPSTORM client_host=host.docker.internal start_with_request=trigger} #start_with_request useless, because env XDEBUG_CONFIG set
+      PHP_IDE_CONFIG: ${PHP_IDE_CONFIG:-serverName=vas3k-club-reader}
+      XDEBUG_MODE: develop, debug
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.sitemap.schedule: "@every 4h"
@@ -23,7 +26,7 @@ services:
       - ./frontend:/app
     restart: unless-stopped
     environment:
-      TZ: Europe/Moscow
+      TZ: ${TZ:-Europe/Moscow}
     ports:
       - ${VAS3K_CLUB_PORT:-3000}:80
 

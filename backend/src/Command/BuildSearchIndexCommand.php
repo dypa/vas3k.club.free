@@ -27,7 +27,7 @@ class BuildSearchIndexCommand extends Command
 
         $i = 0;
         foreach ($this->postRepository->getForDbUpdate() as $array) {
-            $pageParser->crawlAndSave($this->postRepository->findOneById($array['id']));
+            $pageParser($this->postRepository->findOneById($array['id']));
             ++$i;
             if (0 == $i % 5) {
                 echo '.';

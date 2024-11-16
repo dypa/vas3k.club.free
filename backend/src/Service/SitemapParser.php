@@ -27,7 +27,7 @@ final class SitemapParser
     // TODO refactor SQL logic to repository
     public function __invoke(): void
     {
-        $content = $this->getSitemap();
+        $content = $this->getSitemapXml();
         $urls = $this->parseSitemap($content);
 
         $this->connection->executeQuery('CREATE TEMPORARY TABLE sitemap (lastmod, clubId, postType)');
@@ -54,7 +54,7 @@ final class SitemapParser
         // $this->vacuum();
     }
 
-    private function getSitemap(): string
+    private function getSitemapXml(): string
     {
         $client = new Client();
         $request = $client->get(self::SITEMAP_XML);

@@ -13,14 +13,7 @@ final class PostPageParser
 {
     public function __invoke(Post $post)
     {
-        $this->crawlAndSave($post);
-
-        return $post;
-    }
-
-    public function crawlAndSave(Post $post): Post
-    {
-        $html = $this->crawl($post);
+        $html = $this->getHtml($post);
         $crawler = new Crawler($html);
 
         if (true == $this->isClosed($crawler)) {
@@ -123,7 +116,7 @@ final class PostPageParser
         return $title;
     }
 
-    private function crawl(Post $post): string
+    private function getHtml(Post $post): string
     {
         $client = new Client([
             RequestOptions::HTTP_ERRORS => false,
