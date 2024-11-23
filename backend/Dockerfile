@@ -1,4 +1,4 @@
-FROM php:8.3.13-fpm-alpine3.19
+FROM php:8.3.14-fpm-alpine3.19
 
 RUN apk add --no-cache git
 
@@ -8,7 +8,7 @@ RUN chmod +x /usr/local/bin/install-php-extensions && install-php-extensions xde
 COPY dphp /usr/bin/dphp
 RUN chmod +x /usr/bin/dphp
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.8.2
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.8.3
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
 

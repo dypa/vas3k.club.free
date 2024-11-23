@@ -6,7 +6,7 @@ services:
       context: backend
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    restart: unless-stopped       
+    restart: unless-stopped
     volumes:
       - ./backend:/app
     environment:
@@ -62,5 +62,6 @@ services:
     depends_on:
       - api
     command: daemon --docker
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro

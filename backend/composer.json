@@ -8,7 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-simplexml": "*",
-        "doctrine/doctrine-bundle": "2.13.0",
+        "doctrine/doctrine-bundle": "2.13.1",
         "doctrine/orm": "3.3.0",
         "guzzlehttp/guzzle": "7.9.2",
         "symfony/css-selector": "7.1.6",
