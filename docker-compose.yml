@@ -20,7 +20,7 @@ services:
       ofelia.job-exec.sitemap.command: "bin/console app:sitemap"
 
   nginx:
-    image: nginx:1.27.0-alpine3.19-slim
+    image: nginx:1.27.3-alpine3.20-slim
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./frontend:/app
