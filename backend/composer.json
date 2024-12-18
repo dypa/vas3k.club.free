@@ -15,7 +15,7 @@
         "symfony/dom-crawler": "7.2.0",
         "symfony/dotenv": "7.2.0",
         "symfony/flex": "2.4.7",
-        "symfony/framework-bundle": "7.2.0",
+        "symfony/framework-bundle": "7.2.1",
         "symfony/runtime": "7.2.0",
         "symfony/yaml": "7.2.0",
         "voku/html-min": "*"
