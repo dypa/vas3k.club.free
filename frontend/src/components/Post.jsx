@@ -30,6 +30,8 @@ export const Post = (props) => {
     }
   })
 
+  const url = "https://vas3k.club/" + post.postType + "/" + post.id + "/";
+
   return (
     <>
       {!isNew() && !post.like && <span><a title='👍' onClick={() => { vote(1, parseInt(post.id)) }} style={{ cursor: 'pointer' }}>🔥</a>&nbsp;</span>}
@@ -40,7 +42,7 @@ export const Post = (props) => {
           <a
             class="cache"
             target="_blank"
-            href={getApiHost() + '/html/' + post.id}
+            href={url}
           >🌐</a>
         </span>}
 

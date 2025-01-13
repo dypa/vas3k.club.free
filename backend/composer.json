@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "ext-simplexml": "*",
         "doctrine/doctrine-bundle": "2.13.1",
+        "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "3.3.1",
         "guzzlehttp/guzzle": "7.9.2",
         "symfony/css-selector": "7.2.0",
@@ -18,7 +19,7 @@
         "symfony/framework-bundle": "7.2.2",
         "symfony/runtime": "7.2.0",
         "symfony/yaml": "7.2.0",
-        "voku/html-min": "*"
+        "voku/html-min": "4.5.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "*"

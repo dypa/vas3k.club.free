@@ -16,6 +16,23 @@ final class PostPageParser
         $html = $this->getHtml($post);
         $crawler = new Crawler($html);
 
+        $removeSelectors = [
+            'nav.menu',
+            '#footer',
+            '.post-join',
+        ];
+
+        foreach ($removeSelectors as $selector) {
+            $result = $crawler->filter($selector);
+            if ($result->count() > 0) {
+                $result->each(function (Crawler $crawler) {
+                    foreach ($crawler as $node) {
+                        $node->parentNode->removeChild($node);
+                    }
+                });
+            }
+        }
+
         if (true == $this->isClosed($crawler)) {
             $post->deletedAt = new \DateTime();
 
@@ -35,25 +52,10 @@ final class PostPageParser
         $post->title = $title;
 
         $minifier = new HtmlMin();
-        $html = str_replace('href="/', 'href="https://vas3k.club/', $html);
+        $html = str_replace('href="/', 'href="https://vas3k.club/', $crawler->html());
         $errorLevel = error_reporting(0);
         $post->html = $minifier->minify($html);
         error_reporting($errorLevel);
-
-        $post->searchIndex = $post->title;
-        $filters = [
-            'article .text-body',
-            '.comment-body',
-            '.post-type-battle .text-body',
-        ];
-        foreach ($filters as $filter) {
-            $result = $crawler->filter($filter);
-            if ($result->count() > 0) {
-                $post->searchIndex .= $result->text().PHP_EOL;
-            }
-        }
-
-        $post->searchIndex = mb_strtolower($post->searchIndex);
 
         return $post;
     }

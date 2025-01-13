@@ -8,6 +8,7 @@ use App\Service\PostPageParser;
 use App\Service\SitemapParser;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -82,10 +83,10 @@ final class ApiController
         return new JsonResponse(true);
     }
 
-    #[Route('/search/{word}', methods: ['GET'])]
-    public function search(string $word): JsonResponse
+    #[Route('/search', methods: ['POST'])]
+    public function search(Request $request): JsonResponse
     {
-        $posts = $this->postRepository->search($word);
+        $posts = $this->postRepository->search(trim($request->request->get('word')));
 
         return new JsonResponse($posts);
     }

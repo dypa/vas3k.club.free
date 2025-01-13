@@ -21,7 +21,14 @@ export const Search = () => {
     setSearchParams({ q: term })
 
     setSearchQuery(term)
-    const response = await fetch(getApiHost() + '/api/search/' + searchQuery())
+
+    let formData = new FormData();
+    formData.append('word', searchQuery());
+
+    const response = await fetch(getApiHost() + '/api/search', {
+      method: 'POST',
+      body: formData
+    })
 
     if (!response.ok) {
       return

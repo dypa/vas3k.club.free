@@ -2,8 +2,10 @@ services:
   api:
     depends_on:
       - nginx
-    build: 
+    build:
       context: backend
+      args:
+        - USER_ID=${USER_ID:-1000}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
@@ -18,6 +20,8 @@ services:
       ofelia.enabled: "true"
       ofelia.job-exec.sitemap.schedule: "@every 4h"
       ofelia.job-exec.sitemap.command: "bin/console app:sitemap"
+      ofelia.job-exec.searchindex.schedule: "@every 24h"
+      ofelia.job-exec.searchindex.command: "bin/console app:build-search-index"
 
   nginx:
     image: nginx:1.27.3-alpine3.20-slim
@@ -42,11 +46,11 @@ services:
       - install
 
   dev-server:
-    depends_on: 
+    depends_on:
       - api
     build:
       context: frontend
-    command: sh -c "cd /app && bun run dev --host"  
+    command: sh -c "cd /app && bun run dev --host"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

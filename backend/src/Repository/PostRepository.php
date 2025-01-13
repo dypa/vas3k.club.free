@@ -5,7 +5,9 @@ namespace App\Repository;
 use App\Entity\Post;
 use App\Enum\PostType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query\Expr\OrderBy;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -123,14 +125,46 @@ final class PostRepository extends ServiceEntityRepository
      */
     public function search(string $word): array
     {
-        $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
-        $qb->andWhere($qb->expr()->like(
-            'q.searchIndex',
-            $qb->expr()->literal('%'.str_replace(['%', '?'], '', mb_strtolower($word)).'%')
-        ));
-        $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
+        $word = mb_strtolower($word);
 
-        return $qb->getQuery()->getResult();
+        $word = str_replace([
+            '*',
+            '+',
+            'NEAR',
+            '(',
+            ')',
+            '-',
+            '^',
+            'AND',
+            'OR',
+        ], '', $word);
+
+        $sql = '
+            SELECT 
+                id 
+            FROM search 
+            WHERE 
+                title MATCH :word OR 
+                body MATCH :word
+            ORDER BY rank
+            LIMIT 50
+        ';
+
+        $rsm = new ResultSetMapping();
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query->setParameter(':word', $word);
+        $result = $query->getResult(AbstractQuery::HYDRATE_SCALAR_COLUMN);
+
+        if ($result) {
+            $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
+            $qb->andWhere($qb->expr()->in('q.id', $result));
+            $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
+            $qb->setMaxResults(50);
+
+            return $qb->getQuery()->getResult();
+        }
+
+        return [];
     }
 
     public function markAllAsRead()
@@ -151,6 +185,11 @@ final class PostRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->select('q.id');
+        $qb->andWhere("q.html LIKE '<!DOCTYPE%'");
+        $qb->setMaxResults(1000);
+        //        $qb->andWhere('q.lastModified < :updated');
+        //        $qb->setParameter('updated', date('Y-m-d', strtotime('-1 year')));
+        $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
 
         return $qb->getQuery()->toIterable();
     }
@@ -161,10 +200,7 @@ final class PostRepository extends ServiceEntityRepository
     public function getForDbUpdate()
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
-        $qb->select('q.id');
-        $qb->andWhere('q.lastModified < :updated');
-        $qb->setParameter('updated', date('Y-m-d', strtotime('-1 week')));
-        $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
+        $qb->select('q.id, q.title, q.html');
 
         return $qb->getQuery()->toIterable();
     }

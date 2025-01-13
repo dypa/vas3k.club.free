@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Repository\PostRepository;
 use App\Service\PostPageParser;
 use Doctrine\Persistence\ManagerRegistry;
@@ -28,18 +29,21 @@ final class IndexController
         $entityManager = $doctrine->getManager();
         $pageParser = new PostPageParser();
 
+        /** @var Post $post */
         $post = $this->postRepository->find($id);
         if (!$post) {
             throw new NotFoundHttpException();
         }
 
-        $url = $pageParser->getUrl($post);
+        if ($post->viewedAt < $post->lastModified || $post->viewedAt < $post->lastModified) {
+            $post = $pageParser($post);
+        }
+
+        $url = '/html/'.$id;
 
         if ($post->viewedAt) {
             $url .= '?comment_order=-created_at#comments';
         }
-
-        $post = $pageParser($post);
 
         if ($post->deletedAt) {
             $url = '/404';
