@@ -9,6 +9,7 @@ $finder->exclude('vendor');
 
 $config->setRules([
     '@Symfony' => true,
+    '@PHP83Migration' => true,
 ]);
 
 $config->setFinder($finder);

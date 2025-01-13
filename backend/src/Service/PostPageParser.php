@@ -40,9 +40,9 @@ final class PostPageParser
         }
 
         if (PostType::BATTLE == $post->postType) {
-            list($title, $date) = $this->parseBattleNodes($crawler);
+            [$title, $date] = $this->parseBattleNodes($crawler);
         } else {
-            list($title, $date) = $this->parsePageNodes($crawler);
+            [$title, $date] = $this->parsePageNodes($crawler);
         }
 
         $date = $this->replaceDate($date);
