@@ -17,11 +17,12 @@ class ParseAllCommand extends Command
         private ManagerRegistry $doctrine,
         private PostRepository $postRepository,
     ) {
-        parent::__construct(null);
+        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        exit;
         $entityManager = $this->doctrine->getManager();
         $pageParser = new PostPageParser();
 

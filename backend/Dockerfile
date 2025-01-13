@@ -14,7 +14,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
 
-#TODO
 ARG USER_ID=1000
 #RUN addgroup -S www-data
 RUN adduser -u $USER_ID -S app -G www-data

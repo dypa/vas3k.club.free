@@ -18,7 +18,7 @@ class BuildSearchIndexCommand extends Command
         private ManagerRegistry $doctrine,
         private PostRepository $postRepository,
     ) {
-        parent::__construct(null);
+        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -33,7 +33,7 @@ final class PostPageParser
             }
         }
 
-        if (true == $this->isClosed($crawler)) {
+        if ($this->isClosed($crawler)) {
             $post->deletedAt = new \DateTime();
 
             return $post;
@@ -111,9 +111,7 @@ final class PostPageParser
 
     private function prepareTitle(mixed $title): string|array
     {
-        // str_replace('\xc2\xa0', ' ', $title)
-        $title = str_replace(' ', ' ', $title);
-        $title = str_replace(' Публичный пост', '', $title);
+        $title = str_replace([' ', ' Публичный пост'], ' ', $title);
 
         return $title;
     }

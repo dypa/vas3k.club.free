@@ -51,7 +51,7 @@ final class SitemapParser
 
         $this->entityManager->flush();
 
-        // $this->vacuum();
+        $this->vacuum();
     }
 
     private function getSitemapXml(): string
@@ -149,31 +149,8 @@ final class SitemapParser
         }
     }
 
-    /**
-     * TODO disabled because has /html/:id route.
-     * TODO remove search index.
-     */
     private function vacuum(): void
     {
-        $this->connection->executeQuery('
-        UPDATE post SET html = NULL
-        WHERE 
-            deleted_at IS NULL
-            AND 
-            "like" = 0
-            AND 
-            viewed_at < DATE(\'now\', \'-7 days\') 
-        ');
-        $this->connection->executeQuery('
-        UPDATE post SET html = NULL
-        WHERE 
-            deleted_at IS NOT NULL
-            AND 
-            "like" = 0
-            AND 
-            viewed_at < DATE(\'now\', \'-30 days\') 
-        ');
-
         $this->connection->executeQuery('VACUUM');
     }
 }

@@ -14,7 +14,7 @@ class SitemapCommand extends Command
     public function __construct(
         private readonly SitemapParser $sitemapParser,
     ) {
-        parent::__construct(null);
+        parent::__construct();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
