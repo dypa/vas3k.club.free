@@ -21,6 +21,7 @@ final class PostPageParser
             '#footer',
             '.post-join',
             '.linked-posts',
+            '.post-comments-order',
         ];
 
         foreach ($removeSelectors as $selector) {
@@ -71,7 +72,7 @@ final class PostPageParser
 
     public function getUrl(Post $post): string
     {
-        return 'https://vas3k.club/'.$post->postType->value.'/'.$post->id.'/';
+        return 'https://vas3k.club/'.$post->postType->value.'/'.$post->id.'/?comment_order=-created_at';
     }
 
     private function replaceDate(string $date): string

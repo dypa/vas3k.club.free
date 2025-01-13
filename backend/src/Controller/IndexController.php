@@ -42,7 +42,7 @@ final class IndexController
         $url = '/html/'.$id;
 
         if ($post->viewedAt) {
-            $url .= '?comment_order=-created_at#comments';
+            $url .= '#comments';
         }
 
         if ($post->deletedAt) {

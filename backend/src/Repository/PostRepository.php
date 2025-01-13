@@ -185,11 +185,10 @@ final class PostRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->select('q.id');
-        $qb->andWhere("q.html LIKE '<!DOCTYPE%'");
+        $qb->andWhere('q.viewedAt > :updated');
+        $qb->setParameter('updated', date('Y-m-d', strtotime('-30 day')));
+//        $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
         $qb->setMaxResults(1000);
-        //        $qb->andWhere('q.lastModified < :updated');
-        //        $qb->setParameter('updated', date('Y-m-d', strtotime('-1 year')));
-        $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
 
         return $qb->getQuery()->toIterable();
     }
