@@ -16,24 +16,7 @@ final class PostPageParser
         $html = $this->getHtml($post);
         $crawler = new Crawler($html);
 
-        $removeSelectors = [
-            'nav.menu',
-            '#footer',
-            '.post-join',
-            '.linked-posts',
-            '.post-comments-order',
-        ];
-
-        foreach ($removeSelectors as $selector) {
-            $result = $crawler->filter($selector);
-            if ($result->count() > 0) {
-                $result->each(function (Crawler $crawler) {
-                    foreach ($crawler as $node) {
-                        $node->parentNode->removeChild($node);
-                    }
-                });
-            }
-        }
+        $this->cleanupHtml($crawler);
 
         if ($this->isClosed($crawler)) {
             $post->deletedAt = new \DateTime();
@@ -134,5 +117,34 @@ final class PostPageParser
         }
 
         return $request->getBody()->getContents();
+    }
+
+    /**
+     * @param Crawler $crawler
+     * @return void
+     */
+    public function cleanupHtml(Crawler $crawler): void
+    {
+        $removeSelectors = [
+            'nav.menu',
+            '#footer',
+            '.post-join',
+            '.linked-posts',
+            '.post-comments-order',
+            'script',
+            'head meta',
+            'link:not([rel="stylesheet"])',
+        ];
+
+        foreach ($removeSelectors as $selector) {
+            $result = $crawler->filter($selector);
+            if ($result->count() > 0) {
+                $result->each(function (Crawler $crawler) {
+                    foreach ($crawler as $node) {
+                        $node->parentNode->removeChild($node);
+                    }
+                });
+            }
+        }
     }
 }
