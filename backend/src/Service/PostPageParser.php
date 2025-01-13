@@ -20,6 +20,7 @@ final class PostPageParser
             'nav.menu',
             '#footer',
             '.post-join',
+            '.linked-posts',
         ];
 
         foreach ($removeSelectors as $selector) {
