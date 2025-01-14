@@ -37,7 +37,7 @@ export const Menu = () => {
 
   return (
     <menu>
-      Open club reader <sup title={(total() - viewed()).toString()}>{viewed()}/{total()}</sup>
+        <span title={total().toString() +"-"+ viewed().toString() +"="+ (total() - viewed()).toString() }>Open club reader</span>
       &nbsp;|&nbsp;
       <a href="/new">new</a>
       &nbsp;|&nbsp;

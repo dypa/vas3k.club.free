@@ -56,7 +56,7 @@ services:
     volumes:
       - ./frontend:/app
     environment:
-      - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
+      - PORT=${VAS3K_CLUB_PORT:-4000}
     profiles:
       - localhost-only
 

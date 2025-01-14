@@ -22,7 +22,6 @@ class ParseAllCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-//        exit;
         $entityManager = $this->doctrine->getManager();
         $pageParser = new PostPageParser();
 

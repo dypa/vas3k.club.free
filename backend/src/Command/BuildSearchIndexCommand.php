@@ -49,6 +49,14 @@ class BuildSearchIndexCommand extends Command
             ]);
         }
 
+        $this->vacuum();
+
         return Command::SUCCESS;
+    }
+
+    private function vacuum(): void
+    {
+        $connection = $this->doctrine->getConnection();
+        $connection->executeQuery('VACUUM');
     }
 }

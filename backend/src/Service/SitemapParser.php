@@ -50,8 +50,6 @@ final class SitemapParser
         $this->cleanUp();
 
         $this->entityManager->flush();
-
-        $this->vacuum();
     }
 
     private function getSitemapXml(): string
@@ -147,10 +145,5 @@ final class SitemapParser
             $entity = $this->postRepository->findOneBy(['id' => $record['id']]);
             $entity->deletedAt = new \DateTime();
         }
-    }
-
-    private function vacuum(): void
-    {
-        $this->connection->executeQuery('VACUUM');
     }
 }

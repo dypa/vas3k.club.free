@@ -3,8 +3,7 @@
 Попасть в клуб можно запустив `bin/build.sh` и открыв `http://localhost:3000/`
 
 ## Разработка
-Запуск сервера для разработки фронтенд `docker compose run dev-server` и доступно по урлу `http://localhost:3000/dev-server`
+Запуск сервера для разработки фронтенд `docker compose run dev-server` и доступно по урлу написаному в строке `Host` 
 
 ## Обновление пакетов
-`docker compose exec api composer outdated`
-`docker compose exec dev-server bun run update`
+`bin/update.sh`
