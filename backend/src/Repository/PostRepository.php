@@ -125,19 +125,10 @@ final class PostRepository extends ServiceEntityRepository
      */
     public function search(string $word): array
     {
+        $word = trim($word);
         $word = mb_strtolower($word);
-
-        $word = str_replace([
-            '*',
-            '+',
-            'NEAR',
-            '(',
-            ')',
-            '-',
-            '^',
-            'AND',
-            'OR',
-        ], '', $word);
+        $word = preg_replace('/[^\w+\s]/u', '', $word);
+        $word = str_replace(['NEAR', 'AND', 'OR'], '', $word);
 
         $sql = '
             SELECT 

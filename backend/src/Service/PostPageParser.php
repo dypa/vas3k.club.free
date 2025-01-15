@@ -119,10 +119,6 @@ final class PostPageParser
         return $request->getBody()->getContents();
     }
 
-    /**
-     * @param Crawler $crawler
-     * @return void
-     */
     public function cleanupHtml(Crawler $crawler): void
     {
         $removeSelectors = [

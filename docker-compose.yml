@@ -32,7 +32,7 @@ services:
     environment:
       TZ: ${TZ:-Europe/Moscow}
     ports:
-      - ${VAS3K_CLUB_PORT:-3000}:80
+      - ${VAS3K_CLUB_PORT:-4000}:80
 
   bun:
     build:
@@ -41,7 +41,7 @@ services:
     volumes:
       - ./frontend:/app
     environment:
-      - VITE_API_PORT=${VAS3K_CLUB_PORT:-3000}
+      - VITE_API_PORT=${VAS3K_CLUB_PORT:-4000}
     profiles:
       - install
 

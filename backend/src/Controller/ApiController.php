@@ -86,7 +86,7 @@ final class ApiController
     #[Route('/search', methods: ['POST'])]
     public function search(Request $request): JsonResponse
     {
-        $posts = $this->postRepository->search(trim($request->request->get('word')));
+        $posts = $this->postRepository->search($request->request->get('word'));
 
         return new JsonResponse($posts);
     }

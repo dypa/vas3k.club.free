@@ -64,6 +64,17 @@ final class IndexController
             throw new NotFoundHttpException();
         }
 
-        return new Response($post->html);
+        $html = $post->html;
+        $cssPatch = <<<CSS
+<style>
+:root {
+    --serif-font: var(--sans-font) !important;
+  }
+</style>
+CSS;
+
+        $html = str_replace('<body>', '<body>'.$cssPatch, $html);
+
+        return new Response($html);
     }
 }
