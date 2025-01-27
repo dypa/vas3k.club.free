@@ -8,7 +8,7 @@ import { Scrape } from './routes/Scrape'
 import { Search } from './routes/Search'
 
 export function getApiHost() {
-  return '//localhost:' + import.meta.env.VITE_API_PORT
+  return '//localhost:' + import.meta.env.VAS3K_CLUB_PORT
 }
 
 export function reloadPage() {

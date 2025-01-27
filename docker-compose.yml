@@ -41,7 +41,7 @@ services:
     volumes:
       - ./frontend:/app
     environment:
-      - VITE_API_PORT=${VAS3K_CLUB_PORT:-4000}
+      - VAS3K_CLUB_PORT=${VAS3K_CLUB_PORT:-4000}
     profiles:
       - install
 
@@ -56,7 +56,7 @@ services:
     volumes:
       - ./frontend:/app
     environment:
-      - PORT=${VAS3K_CLUB_PORT:-4000}
+      - VAS3K_CLUB_PORT=${VAS3K_CLUB_PORT:-4000}
     profiles:
       - localhost-only
 

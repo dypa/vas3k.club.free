@@ -13,11 +13,11 @@
   "license": "MIT",
   "devDependencies": {
     "npm-check-updates": "*",
-    "vite": "6.0.7",
+    "vite": "6.0.11",
     "vite-plugin-solid": "2.11.0"
   },
   "dependencies": {
-    "@solidjs/router": "0.15.2",
+    "@solidjs/router": "0.15.3",
     "solid-js": "1.9.4"
   }
 }
