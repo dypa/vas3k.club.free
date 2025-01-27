@@ -41,24 +41,16 @@ services:
     volumes:
       - ./frontend:/app
     environment:
-      - VAS3K_CLUB_PORT=${VAS3K_CLUB_PORT:-4000}
+      - VITE_API_HOST=${VAS3K_CLUB_HOST:-localhost}
+      - VITE_API_PORT=${VAS3K_CLUB_PORT:-4000}
     profiles:
       - install
 
   dev-server:
-    depends_on:
-      - api
-    build:
-      context: frontend
+    extends: bun
     command: sh -c "cd /app && bun run dev --host"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    volumes:
-      - ./frontend:/app
-    environment:
-      - VAS3K_CLUB_PORT=${VAS3K_CLUB_PORT:-4000}
     profiles:
-      - localhost-only
+      - dev-only
 
   #docs https://github.com/mcuadros/ofelia
   ofelia:

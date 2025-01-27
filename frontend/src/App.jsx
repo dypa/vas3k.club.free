@@ -8,7 +8,8 @@ import { Scrape } from './routes/Scrape'
 import { Search } from './routes/Search'
 
 export function getApiHost() {
-  return '//localhost:' + import.meta.env.VAS3K_CLUB_PORT
+  //see https://vite.dev/guide/env-and-mode
+  return '//' + import.meta.env.VITE_API_HOST + ':' + import.meta.env.VITE_API_PORT
 }
 
 export function reloadPage() {
