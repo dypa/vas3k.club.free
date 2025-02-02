@@ -1,1 +1,1 @@
-docker compose run dev-server
+docker compose run --remove-orphans dev-server

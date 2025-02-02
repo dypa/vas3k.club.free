@@ -22,14 +22,14 @@ const App = () => {
   return (
     <div>
       <div class="row">
-        <div class="col_12 menu">
+        <div class="col-12 menu">
           <Menu />
         </div>
       </div>
 
       <div class="row">
-        <div class="col_1">&nbsp;</div>
-        <div class="col_10" id="content">
+        <div class="col-2">&nbsp;</div>
+        <div class="col-8" id="content">
           <Router>
             <Route path="/" component={() => <Navigate href="/new" />} />;
 
@@ -56,11 +56,11 @@ const App = () => {
             <Route path="*" component={NotFound} />
           </Router>
         </div>
-        <div class="col_1">&nbsp;</div>
+        <div class="col-2">&nbsp;</div>
       </div>
 
       <div class="row">
-        <div class="col_12">&nbsp;</div>
+        <div class="col-12">&nbsp;</div>
       </div>
 
     </div>

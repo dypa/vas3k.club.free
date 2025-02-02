@@ -6,7 +6,7 @@ export const Scrape = () => {
   const [isDone, setDone] = createSignal(false)
   const [animate, setAnimate] = createSignal(0)
 
-  const timerId = setInterval(() => setAnimate(animate() + 50), 1000)
+  const timerId = setInterval(() => setAnimate(animate() + 25), 500)
   setTimeout(() => { clearInterval(timerId) }, 10000)
 
   onMount(async () => {
@@ -30,10 +30,13 @@ export const Scrape = () => {
       </Show>
 
       <Show when={!isDone()}>
+        <div class="row">
+          <div class="col-2"></div>
+          <div class="col-8 is-center">
         <pre
           id="nyancat"
           style={{
-            'padding-left': `${animate()}px`
+            'padding-left': `${animate()}px`,
           }}
         >
           ⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣀⣀⠀⠀⠀⠀⠀
@@ -48,6 +51,8 @@ export const Scrape = () => {
           ⠀⠀⠀⠀⠀⠸⣤⡴⠋⠸⣇⣠⠼⠁⠀⠀⠀⠹⣄⣠⠞⠀⢾⡀⣠⠃⠀⠀⠀⠀
           ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠁⠀⠀⠀⠀⠀
         </pre>
+        </div>
+        </div>
       </Show >
     </>
   )

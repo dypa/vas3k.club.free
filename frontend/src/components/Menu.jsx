@@ -36,22 +36,26 @@ export const Menu = () => {
   }
 
   return (
-    <menu>
-        <span title={total().toString() +"-"+ viewed().toString() +"="+ (total() - viewed()).toString() }>Open club reader</span>
-      &nbsp;|&nbsp;
-      <a href="/new">new</a>
-      &nbsp;|&nbsp;
-      <a href="/updated">updated</a> <sup class="sup" onClick={() => { markAllAsRead() }}>{updated()}</sup>
-      &nbsp;|&nbsp;
-      <a href="/favorite">favorite</a> <sup>{liked()}</sup>
-      &nbsp;|&nbsp;
-      <a href="/deleted">deleted</a>
-      &nbsp;|&nbsp;
-      <a href="/done">done</a>
-      &nbsp;|&nbsp;
-      <a href="/search">search</a>
-      &nbsp;|&nbsp;
-      <a href="/scrape">refresh</a>
-    </menu>
+    <div class="row">
+      <div class="col is-center">
+        <menu>
+          <span title={total().toString() + "-" + viewed().toString() + "=" + (total() - viewed()).toString()}>Open club reader</span>
+          &nbsp;|&nbsp;
+          <a href="/new">new</a>
+          &nbsp;|&nbsp;
+          <a href="/updated">updated</a> <sup class="sup" onClick={() => { markAllAsRead() }}>{updated()}</sup>
+          &nbsp;|&nbsp;
+          <a href="/favorite">favorite</a> <sup>{liked()}</sup>
+          &nbsp;|&nbsp;
+          <a href="/deleted">deleted</a>
+          &nbsp;|&nbsp;
+          <a href="/done">done</a>
+          &nbsp;|&nbsp;
+          <a href="/search">search</a>
+          &nbsp;|&nbsp;
+          <a href="/scrape">refresh</a>
+        </menu>
+      </div>
+    </div>
   )
 }

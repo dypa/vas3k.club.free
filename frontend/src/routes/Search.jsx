@@ -57,8 +57,11 @@ export const Search = () => {
         value={searchQuery()}
         onInput={async (event) => { await loadResults(event.currentTarget.value) }}
       />
+
+      <Show when={results().length == 0}><NotFound /></Show>
+
       <ul>
-        <For each={results()} fallback={<NotFound />}>
+        <For each={results()}>
           {(post) => <li><Post post={post} /></li>}
         </For>
       </ul>

@@ -1,3 +1,3 @@
 export const NotFound = () => {
-  return (<pre class="center">¯\\_(ツ)_/¯</pre>)
+  return (<pre>¯\\_(ツ)_/¯</pre>)
 }
