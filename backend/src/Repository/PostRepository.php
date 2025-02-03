@@ -172,10 +172,21 @@ final class PostRepository extends ServiceEntityRepository
         return $qb->getQuery()->execute();
     }
 
-    public function findAllIterator()
+    public function findForUpdateIterator()
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->select('q.id');
+
+        $qb->andWhere(
+            $qb->expr()->orX(
+                'q.updatedAt IS NULL',
+                'q.updatedAt < :updated'
+            )
+        );
+
+        $qb->setParameter('updated', date('Y-m-d', strtotime('-90 days')));
+
+        $qb->setMaxResults(1000);
 
         return $qb->getQuery()->toIterable();
     }

@@ -18,6 +18,8 @@ final class PostPageParser
 
         $this->cleanupHtml($crawler);
 
+        $post->updatedAt = new \DateTime();
+
         if ($this->isClosed($crawler)) {
             $post->deletedAt = new \DateTime();
 

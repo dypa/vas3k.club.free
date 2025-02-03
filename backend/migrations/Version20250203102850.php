@@ -7,7 +7,10 @@ namespace migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-final class Version20250113075539 extends AbstractMigration
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20250203102850 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,8 +24,7 @@ final class Version20250113075539 extends AbstractMigration
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\SQLitePlatform'."
         );
 
-        $this->connection->executeQuery('DROP TABLE IF EXISTS search');
-        $this->connection->executeQuery('CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts5(id, title, body)');
+        $this->connection->executeQuery('ALTER TABLE post ADD updated_at DATE;');
     }
 
     public function down(Schema $schema): void
@@ -32,6 +34,6 @@ final class Version20250113075539 extends AbstractMigration
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\SQLitePlatform'."
         );
 
-        $this->connection->executeQuery('DROP TABLE search');
+        $this->connection->executeQuery('ALTER TABLE post DROP COLUMN updated_at');
     }
 }

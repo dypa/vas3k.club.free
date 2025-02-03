@@ -21,6 +21,9 @@ use Doctrine\ORM\Mapping as ORM;
     public ?\DateTime $createdAt;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    public ?\DateTime $updatedAt;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     public \DateTime $lastModified;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
