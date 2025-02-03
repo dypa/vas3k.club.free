@@ -130,6 +130,8 @@ final class PostPageParser
             'script',
             'head meta',
             'link:not([rel="stylesheet"])',
+            '.post-badges',
+            '.post-publicity-preferences',
         ];
 
         foreach ($removeSelectors as $selector) {
