@@ -48,7 +48,8 @@ services:
 
   dev-server:
     extends: bun
-    command: sh -c "cd /app && bun run dev --host"
+    #ulimit -c 0 - prevent core dump create
+    command: sh -c "cd /app && ulimit -c 0 && bun run dev --host"
     profiles:
       - dev-only
 

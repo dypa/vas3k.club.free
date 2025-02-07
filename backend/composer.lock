@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95e41dd724753169f24c7b125aa13411",
+    "content-hash": "38cb0ce260553d1be09a4124f1a43a3c",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -976,16 +976,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "3.3.1",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "b1f8253105aa5382c495e5f9f8ef34e297775428"
+                "reference": "c9557c588b3a70ed93caff069d0aa75737f25609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/b1f8253105aa5382c495e5f9f8ef34e297775428",
-                "reference": "b1f8253105aa5382c495e5f9f8ef34e297775428",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/c9557c588b3a70ed93caff069d0aa75737f25609",
+                "reference": "c9557c588b3a70ed93caff069d0aa75737f25609",
                 "shasum": ""
             },
             "require": {
@@ -1060,9 +1060,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/3.3.1"
+                "source": "https://github.com/doctrine/orm/tree/3.3.2"
             },
-            "time": "2024-12-19T07:08:14+00:00"
+            "time": "2025-02-04T19:43:15+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -5633,12 +5633,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "c10bce58e215dabda33ba5dd3f3a153e85684222"
+                "reference": "fea491c34509d40dc45b48b9d1e18a5559eee9a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c10bce58e215dabda33ba5dd3f3a153e85684222",
-                "reference": "c10bce58e215dabda33ba5dd3f3a153e85684222",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/fea491c34509d40dc45b48b9d1e18a5559eee9a6",
+                "reference": "fea491c34509d40dc45b48b9d1e18a5559eee9a6",
                 "shasum": ""
             },
             "conflict": {
@@ -6117,7 +6117,7 @@
                 "phpmyfaq/phpmyfaq": "<3.2.5|==3.2.5|>=3.2.10,<=4.0.1",
                 "phpoffice/common": "<0.2.9",
                 "phpoffice/phpexcel": "<1.8.1",
-                "phpoffice/phpspreadsheet": "<1.29.8|>=2,<2.1.7|>=2.2,<2.3.6|>=3,<3.8",
+                "phpoffice/phpspreadsheet": "<1.29.9|>=2,<2.1.8|>=2.2,<2.3.7|>=3,<3.9",
                 "phpseclib/phpseclib": "<2.0.47|>=3,<3.0.36",
                 "phpservermon/phpservermon": "<3.6",
                 "phpsysinfo/phpsysinfo": "<3.4.3",
@@ -6180,6 +6180,7 @@
                 "robrichards/xmlseclibs": ">=1,<3.0.4",
                 "roots/soil": "<4.1",
                 "rudloff/alltube": "<3.0.3",
+                "rudloff/rtmpdump-bin": "<=2.3.1",
                 "s-cart/core": "<6.9",
                 "s-cart/s-cart": "<6.9",
                 "sabberworm/php-css-parser": ">=1,<1.0.1|>=2,<2.0.1|>=3,<3.0.1|>=4,<4.0.1|>=5,<5.0.9|>=5.1,<5.1.3|>=5.2,<5.2.1|>=6,<6.0.2|>=7,<7.0.4|>=8,<8.0.1|>=8.1,<8.1.1|>=8.2,<8.2.1|>=8.3,<8.3.1",
@@ -6235,7 +6236,7 @@
                 "snipe/snipe-it": "<=7.0.13",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "socialiteproviders/steam": "<1.1",
-                "spatie/browsershot": "<5.0.3",
+                "spatie/browsershot": "<5.0.5",
                 "spatie/image-optimizer": "<1.7.3",
                 "spencer14420/sp-php-email-handler": "<1",
                 "spipu/html2pdf": "<5.2.8",
@@ -6263,7 +6264,7 @@
                 "sylius/grid-bundle": "<1.10.1",
                 "sylius/paypal-plugin": ">=1,<1.2.4|>=1.3,<1.3.1",
                 "sylius/resource-bundle": ">=1,<1.3.14|>=1.4,<1.4.7|>=1.5,<1.5.2|>=1.6,<1.6.4",
-                "sylius/sylius": "<1.12.19|>=1.13.0.0-alpha1,<1.13.4",
+                "sylius/sylius": "<=2.0.2",
                 "symbiote/silverstripe-multivaluefield": ">=3,<3.1",
                 "symbiote/silverstripe-queuedjobs": ">=3,<3.0.2|>=3.1,<3.1.4|>=4,<4.0.7|>=4.1,<4.1.2|>=4.2,<4.2.4|>=4.3,<4.3.3|>=4.4,<4.4.3|>=4.5,<4.5.1|>=4.6,<4.6.4",
                 "symbiote/silverstripe-seed": "<6.0.3",
@@ -6497,7 +6498,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-31T21:04:56+00:00"
+            "time": "2025-02-06T19:04:33+00:00"
         },
         {
             "name": "sebastian/diff",
