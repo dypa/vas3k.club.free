@@ -191,9 +191,6 @@ final class PostRepository extends ServiceEntityRepository
         return $qb->getQuery()->toIterable();
     }
 
-    /**
-     * @return Post[]
-     */
     public function getForDbUpdate()
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();

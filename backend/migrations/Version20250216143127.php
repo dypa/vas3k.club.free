@@ -7,9 +7,6 @@ namespace migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 final class Version20250216143127 extends AbstractMigration
 {
     public function getDescription(): string
@@ -25,7 +22,8 @@ final class Version20250216143127 extends AbstractMigration
         );
 
         $this->connection->executeQuery('DROP TABLE IF EXISTS search');
-        $this->connection->executeQuery('CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts5(id, title, body, columnsize=0)');    }
+        $this->connection->executeQuery('CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts5(id, title, body, columnsize=0, detail=column)');
+    }
 
     public function down(Schema $schema): void
     {
@@ -35,5 +33,6 @@ final class Version20250216143127 extends AbstractMigration
         );
 
         $this->connection->executeQuery('DROP TABLE search');
+        $this->connection->executeQuery('CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts5(id, title, body)');
     }
 }
