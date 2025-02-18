@@ -90,6 +90,7 @@ final class PostRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilderExcludeSomeTypes();
         $qb->andWhere($qb->expr()->isNotNull('q.deletedAt'));
         $qb->andWhere($qb->expr()->isNotNull('q.html'));
+        $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
 
         $qb->setFirstResult($page * $this->getPostsPeerPage());
         $qb->setMaxResults($this->getPostsPeerPage());

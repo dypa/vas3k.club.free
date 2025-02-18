@@ -45,7 +45,7 @@ final class IndexController
             $url .= '#comments';
         }
 
-        if ($post->deletedAt) {
+        if ($post->deletedAt && empty($post->title)) {
             $url = '/404';
         } else {
             $post->viewedAt = new \DateTime();
