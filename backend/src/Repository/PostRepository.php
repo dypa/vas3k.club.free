@@ -134,7 +134,7 @@ final class PostRepository extends ServiceEntityRepository
 
         $rsm = new ResultSetMapping();
         $query = $this->getEntityManager()->createNativeQuery(
-            'SELECT ROWID FROM search(:word) LIMIT '.$limit,
+            'SELECT ROWID FROM search(:word) LIMIT ' . $limit,
             $rsm
         );
         $query->setParameter(':word', $word);
@@ -143,7 +143,7 @@ final class PostRepository extends ServiceEntityRepository
         if ($result) {
             $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
             $qb->andWhere($qb->expr()->in('q.id', $result));
-            //для contentless fts5 rank всегда равен 0 и есть только ROWID
+            // для contentless fts5 rank всегда равен 0 и есть только ROWID
             $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
             $qb->setMaxResults($limit);
 

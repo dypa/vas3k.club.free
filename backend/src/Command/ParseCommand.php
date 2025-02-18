@@ -44,8 +44,8 @@ class ParseCommand extends Command
                 gc_mem_caches();
                 // TODO memory steel leaks
                 $i = 0;
-                echo '|'.PHP_EOL;
-                echo round(memory_get_usage() / 1024 / 1024, 3).PHP_EOL;
+                echo '|' . PHP_EOL;
+                echo round(memory_get_usage() / 1024 / 1024, 3) . PHP_EOL;
             }
         }
 

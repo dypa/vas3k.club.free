@@ -72,8 +72,8 @@ final class SitemapParser
             $lastmod = (string) $node->lastmod;
             $dto = new SitemapLocNode();
             $dto->lastmod = \DateTime::createFromFormat('Y-m-d', $lastmod);
-            $dto->type = PostType::from(preg_replace('~'.self::REGEXP.'~', '$1', $loc));
-            $dto->clubId = preg_replace('~'.self::REGEXP.'~', '$2', $loc);
+            $dto->type = PostType::from(preg_replace('~' . self::REGEXP . '~', '$1', $loc));
+            $dto->clubId = preg_replace('~' . self::REGEXP . '~', '$2', $loc);
 
             $urls[$dto->clubId] = $dto;
         }

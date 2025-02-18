@@ -25,7 +25,7 @@ class BuildSearchIndexCommand extends Command
     {
         /** @var Connection $connection */
         $connection = $this->doctrine->getConnection();
-        //https://www.sqlite.org/fts5.html#the_delete_all_command
+        // https://www.sqlite.org/fts5.html#the_delete_all_command
         $connection->executeQuery("INSERT INTO search(search) VALUES('delete-all')");
 
         foreach ($this->postRepository->findForBuildSearchIndexIterator() as $array) {
@@ -39,7 +39,7 @@ class BuildSearchIndexCommand extends Command
             foreach ($filters as $filter) {
                 $result = $crawler->filter($filter);
                 if ($result->count() > 0) {
-                    $searchIndex .= mb_strtolower($result->text()).PHP_EOL;
+                    $searchIndex .= mb_strtolower($result->text()) . PHP_EOL;
                 }
             }
 
