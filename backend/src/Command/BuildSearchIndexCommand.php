@@ -25,9 +25,10 @@ class BuildSearchIndexCommand extends Command
     {
         /** @var Connection $connection */
         $connection = $this->doctrine->getConnection();
-        $connection->executeQuery('DELETE FROM search');
+        //https://www.sqlite.org/fts5.html#the_delete_all_command
+        $connection->executeQuery("INSERT INTO search(search) VALUES('delete-all')");
 
-        foreach ($this->postRepository->getForDbUpdate() as $array) {
+        foreach ($this->postRepository->findForBuildSearchIndexIterator() as $array) {
             $crawler = new Crawler($array['html']);
             $searchIndex = '';
             $filters = [
@@ -42,8 +43,11 @@ class BuildSearchIndexCommand extends Command
                 }
             }
 
+            if (!is_numeric($array['id'])) {
+                continue;
+            }
             $connection->insert('search', [
-                'id' => $array['id'],
+                'ROWID' => $array['id'],
                 'title' => $array['title'],
                 'body' => $searchIndex,
             ]);

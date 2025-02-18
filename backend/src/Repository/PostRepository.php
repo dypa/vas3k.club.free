@@ -121,36 +121,31 @@ final class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * @todo limit = 50
+     *
      * @return Post[]
      */
-    public function search(string $word): array
+    public function search(string $word, $limit = 10050): array
     {
         $word = trim($word);
         $word = mb_strtolower($word);
         $word = preg_replace('/[^\w+\s]/u', '', $word);
         $word = str_replace(['NEAR', 'AND', 'OR'], '', $word);
 
-        $sql = '
-            SELECT 
-                id 
-            FROM search 
-            WHERE 
-                title MATCH :word OR 
-                body MATCH :word
-            ORDER BY rank
-            LIMIT 50
-        ';
-
         $rsm = new ResultSetMapping();
-        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+        $query = $this->getEntityManager()->createNativeQuery(
+            'SELECT ROWID FROM search(:word) LIMIT '.$limit,
+            $rsm
+        );
         $query->setParameter(':word', $word);
         $result = $query->getResult(AbstractQuery::HYDRATE_SCALAR_COLUMN);
 
         if ($result) {
             $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
             $qb->andWhere($qb->expr()->in('q.id', $result));
+            //для contentless fts5 rank всегда равен 0 и есть только ROWID
             $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
-            $qb->setMaxResults(50);
+            $qb->setMaxResults($limit);
 
             return $qb->getQuery()->getResult();
         }
@@ -191,7 +186,7 @@ final class PostRepository extends ServiceEntityRepository
         return $qb->getQuery()->toIterable();
     }
 
-    public function getForDbUpdate()
+    public function findForBuildSearchIndexIterator()
     {
         $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
         $qb->select('q.id, q.title, q.html');
