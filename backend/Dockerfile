@@ -10,7 +10,7 @@ RUN install-php-extensions xdebug
 COPY dphp /usr/bin/dphp
 RUN chmod +x /usr/bin/dphp
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.8.5
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.8.6
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
 

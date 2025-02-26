@@ -1,7 +1,6 @@
-docker compose build
-docker compose build bun dev-server
+COMPOSE_BAKE=true docker compose --profile "*" build
 
-docker compose up -d --build
+COMPOSE_BAKE=true docker compose up -d --build
 
 docker compose run --rm bun
 docker compose exec api composer install
