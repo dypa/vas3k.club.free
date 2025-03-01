@@ -47,8 +47,3 @@ menu .sup {
 #search {
     font-size: medium;
 }
-
-pre {
-    display: flex;
-    justify-content: center;
-}

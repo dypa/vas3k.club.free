@@ -22,7 +22,7 @@ export const Posts = (props) => {
     setPage(parseInt(params.page))
   }
 
-  const [posts] = createResource(page, loadPosts)
+  const [posts] = createResource(page, loadPosts, {initialValue: []})
 
   async function loadPosts(page) {
     const response = await fetch(generateUri(type()) + '/' + page)
@@ -46,7 +46,7 @@ export const Posts = (props) => {
 
       <Show when={total() == 0}><NotFound /></Show>
 
-      <Show when={posts()}>
+      <Show when={posts().length > 0}>
         <ul>
           <For each={posts()} >
             {(post) => <li><Post post={post} /></li>}

@@ -12,7 +12,7 @@ export const Scrape = () => {
   }
 
   const rnd = function () {
-    return randomEmoji() + randomEmoji() + randomEmoji();
+    return [randomEmoji(), randomEmoji(), randomEmoji()].join(" ")
   }
 
   const [isDone, setDone] = createSignal(false)
@@ -42,12 +42,7 @@ export const Scrape = () => {
       </Show>
 
       <Show when={!isDone()}>
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-8 is-center">
-            {animate()}
-          </div>
-        </div>
+        <pre class="is-center">{animate()}</pre>
       </Show >
     </>
   )
