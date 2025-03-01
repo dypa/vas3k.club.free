@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use GuzzleHttp\Exception\ConnectException;
 
 final class IndexController
 {
@@ -35,20 +36,24 @@ final class IndexController
             throw new NotFoundHttpException();
         }
 
-        if ($post->viewedAt < $post->lastModified || $post->viewedAt < $post->lastModified) {
-            $post = $pageParser($post);
-        }
-
         $url = '/html/' . $id;
+
+        if ($post->viewedAt < $post->lastModified || $post->viewedAt < $post->lastModified) {
+            try {
+                $post = $pageParser($post);
+
+                if ($post->deletedAt && empty($post->title)) {
+                    $url = '/404';
+                } else {
+                    $post->viewedAt = new \DateTime();
+                }
+            } catch (ConnectException $e) {
+
+            }
+        }
 
         if ($post->viewedAt) {
             $url .= '#comments';
-        }
-
-        if ($post->deletedAt && empty($post->title)) {
-            $url = '/404';
-        } else {
-            $post->viewedAt = new \DateTime();
         }
 
         $entityManager->flush();
