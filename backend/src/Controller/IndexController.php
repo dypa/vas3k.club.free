@@ -6,11 +6,11 @@ use App\Entity\Post;
 use App\Repository\PostRepository;
 use App\Service\PostPageParser;
 use Doctrine\Persistence\ManagerRegistry;
+use GuzzleHttp\Exception\ConnectException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use GuzzleHttp\Exception\ConnectException;
 
 final class IndexController
 {
@@ -37,6 +37,9 @@ final class IndexController
         }
 
         $url = '/html/' . $id;
+        if ($post->viewedAt && $post->html) {
+            $url .= '#comments';
+        }
 
         if ($post->viewedAt < $post->lastModified || $post->viewedAt < $post->lastModified) {
             try {
@@ -48,12 +51,7 @@ final class IndexController
                     $post->viewedAt = new \DateTime();
                 }
             } catch (ConnectException $e) {
-
             }
-        }
-
-        if ($post->viewedAt) {
-            $url .= '#comments';
         }
 
         $entityManager->flush();

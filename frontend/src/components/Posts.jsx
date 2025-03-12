@@ -54,11 +54,11 @@ export const Posts = (props) => {
         </ul>
       </Show>
 
-      <Show when={total() > page()}>
+      <Show when={total() !=1 && total() > page()}>
         <div class="is-center">
           <a onClick={() => { nav((page() > 0 ? page() - 1 : page())) }} >◄◄◄</a>
           <span>&nbsp; {page() + 1} / {total()} &nbsp;</span>
-          <a onClick={() => { nav((page() + 1 <= total() ? page() + 1 : page())) }} >►►►</a>
+          <a onClick={() => { nav((page() + 1 < total() ? page() + 1 : page())) }} >►►►</a>
         </div>
       </Show>
     </Suspense>

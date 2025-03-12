@@ -14,6 +14,12 @@ final class PostPageParser
     public function __invoke(Post $post)
     {
         $html = $this->getHtml($post);
+        if (!$html) {
+            $post->deletedAt = new \DateTime();
+
+            return $post;
+        }
+
         $crawler = new Crawler($html);
 
         $this->cleanupHtml($crawler);
@@ -108,17 +114,17 @@ final class PostPageParser
         $client = new Client([
             RequestOptions::HTTP_ERRORS => false,
         ]);
-        $request = $client->get($this->getUrl($post));
+        $response = $client->get($this->getUrl($post));
 
-        if (404 == $request->getStatusCode()) {
+        if (404 == $response->getStatusCode()) {
             return '';
         }
 
-        if (200 != $request->getStatusCode()) {
+        if (200 != $response->getStatusCode()) {
             throw new \LogicException();
         }
 
-        return $request->getBody()->getContents();
+        return $response->getBody()->getContents();
     }
 
     public function cleanupHtml(Crawler $crawler): void

@@ -9,7 +9,7 @@ $finder->exclude('vendor');
 
 $config->setRules([
     '@Symfony' => true,
-    '@PHP83Migration' => true,
+    '@PHP84Migration' => true,
     'concat_space' => ['spacing' => 'one'],
 ]);
 
