@@ -140,6 +140,7 @@ final class PostPageParser
             'link:not([rel="stylesheet"])',
             '.post-badges',
             '.post-publicity-preferences',
+            '.thread-ruler-icons'
         ];
 
         foreach ($removeSelectors as $selector) {

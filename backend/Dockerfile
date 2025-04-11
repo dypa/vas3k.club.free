@@ -4,15 +4,15 @@ RUN apk add --no-cache git
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions
-RUN install-php-extensions opcache
-RUN install-php-extensions xdebug
+RUN install-php-extensions opcache xdebug
 
 COPY dphp /usr/bin/dphp
 RUN chmod +x /usr/bin/dphp
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.8.6
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.8.8
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
+ENV PATH="$PATH:/.composer/vendor/bin"
 
 ARG USER_ID=1000
 #RUN addgroup -S www-data

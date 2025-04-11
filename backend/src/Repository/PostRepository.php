@@ -179,8 +179,9 @@ final class PostRepository extends ServiceEntityRepository
                 'q.updatedAt < :updated'
             )
         );
+        $qb->andWhere('q.updatedAt < q.lastModified');
 
-        $qb->setParameter('updated', date('Y-m-d', strtotime('-90 days')));
+        $qb->setParameter('updated', date('Y-m-d', strtotime('-3 days')));
 
         $qb->setMaxResults(1000);
 
