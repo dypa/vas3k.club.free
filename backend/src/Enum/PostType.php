@@ -16,6 +16,7 @@ enum PostType: string
     case WEEKLY_DIGEST = 'weekly_digest';
     case GUIDE = 'guide';
     case THREAD = 'thread';
+    case DOCS = 'docs';
 
     public function getI18n(): string
     {
@@ -32,6 +33,7 @@ enum PostType: string
             self::WEEKLY_DIGEST => 'Журнал Клуба',
             self::GUIDE => 'Путеводитель',
             self::THREAD => 'Тред',
+            self::DOCS => '',
         };
     }
 }
