@@ -4,21 +4,21 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.4",
+        "php": "8.3.*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-simplexml": "*",
-        "doctrine/doctrine-bundle": "2.14.0",
-        "doctrine/doctrine-migrations-bundle": "3.4.1",
-        "doctrine/orm": "3.3.2",
-        "guzzlehttp/guzzle": "7.9.3",
-        "symfony/css-selector": "7.2.0",
-        "symfony/dom-crawler": "7.2.4",
-        "symfony/dotenv": "7.2.0",
-        "symfony/flex": "2.5.0",
-        "symfony/framework-bundle": "7.2.5",
-        "symfony/runtime": "7.2.3",
-        "symfony/yaml": "7.2.5",
+        "doctrine/doctrine-bundle": "2.*",
+        "doctrine/doctrine-migrations-bundle": "3.*",
+        "doctrine/orm": "3.*",
+        "guzzlehttp/guzzle": "7.9.*",
+        "symfony/css-selector": "6.4.*",
+        "symfony/dom-crawler": "6.4.*",
+        "symfony/dotenv": "6.4.*",
+        "symfony/flex": "*",
+        "symfony/framework-bundle": "6.4.*",
+        "symfony/runtime": "6.4.*",
+        "symfony/yaml": "6.4.*",
         "voku/html-min": "4.5.1"
     },
     "require-dev": {
@@ -73,7 +73,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.2.*",
+            "require": "6.4.*",
             "docker": false
         }
     }

@@ -69,7 +69,7 @@ final class IndexController
 
         $html = $post->html;
 
-        $uri = "https://vas3k.club/" . $post->postType->value . "/" . $post->id . "/";
+        $uri = 'https://vas3k.club/' . $post->postType->value . '/' . $post->id . '/';
         $htmlPatch = "<a href=\"$uri\" style=\"text-decoration:none\">🌐</a>";
         $cssPatch = <<<CSS
             <style>
@@ -80,12 +80,12 @@ final class IndexController
             </style>
             CSS;
         $icoPatch = <<<ICO
-            <link
-            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💩</text></svg>"
-            rel="icon">
-        ICO;
-        
-        $html = str_replace('<body>', '<body>' . $htmlPatch, $html);            
+                <link
+                href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💩</text></svg>"
+                rel="icon">
+            ICO;
+
+        $html = str_replace('<body>', '<body>' . $htmlPatch, $html);
         $html = str_replace('<body>', '<body>' . $cssPatch, $html);
         $html = str_replace('</title>', '</title>' . $icoPatch, $html);
 
