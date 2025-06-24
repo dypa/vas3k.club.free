@@ -37,7 +37,7 @@ final class PostRepository extends ServiceEntityRepository
             'q.title',
             'q.postType',
         ]));
-        $qb->where($qb->expr()->notIn('q.postType', [PostType::INTRO->value, PostType::WEEKLY_DIGEST->value]));
+        $qb->where($qb->expr()->notIn('q.postType', [PostType::INTRO->value, PostType::WEEKLY_DIGEST->value, PostType::DOCS->value]));
 
         return $qb;
     }

@@ -32,7 +32,7 @@ final class SitemapParser
 
         $this->connection->executeQuery('CREATE TEMPORARY TABLE sitemap (lastmod, clubId, postType)');
         foreach ($urls as $url) {
-            if (!in_array($url->type, [PostType::INTRO, PostType::WEEKLY_DIGEST])) {
+            if (!in_array($url->type, [PostType::INTRO, PostType::WEEKLY_DIGEST, PostType::DOCS])) {
                 $this->connection->executeQuery("
                 INSERT INTO temp.sitemap (lastmod, clubId, postType) 
                 VALUES 

@@ -1,4 +1,4 @@
-FROM php:8.3.20-fpm-alpine
+FROM php:8.3.22-fpm-alpine
 
 RUN apk add --no-cache git
 
@@ -9,7 +9,7 @@ RUN install-php-extensions opcache xdebug
 COPY dphp /usr/bin/dphp
 RUN chmod +x /usr/bin/dphp
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.8.8
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer --version=2.8.9
 ENV COMPOSER_HOME=/.composer
 RUN mkdir /.composer && chmod -R 777 /.composer
 ENV PATH="$PATH:/.composer/vendor/bin"
