@@ -19,7 +19,8 @@ final class SitemapParser
     public function __construct(
         private readonly ManagerRegistry $doctrine,
         private readonly PostRepository $postRepository,
-        private /* readonly */ Connection $connection,
+        /* readonly */
+        private Connection $connection,
         private readonly EntityManagerInterface $entityManager,
     ) {
     }

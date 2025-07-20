@@ -160,7 +160,7 @@ final class PostRepository extends ServiceEntityRepository
         $qb->update(Post::class, 'q');
 
         $qb->set('q.viewedAt', ':date');
-        $qb->setParameter(':date', (new \DateTime())->format('Y-m-d H:i:s'));
+        $qb->setParameter(':date', new \DateTime()->format('Y-m-d H:i:s'));
 
         $qb->andWhere('q.viewedAt < q.lastModified');
         $qb->andWhere('q.deletedAt is NULL');
