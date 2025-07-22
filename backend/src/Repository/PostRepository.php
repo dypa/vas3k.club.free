@@ -52,10 +52,11 @@ final class PostRepository extends ServiceEntityRepository
 
     public function filter(string $type, int $page): Paginator
     {
-        $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
+        // $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
 
         switch ($type) {
             case 'new':
+                $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
                 $qb->andWhere($qb->expr()->isNull('q.viewedAt'));
                 $qb->addSelect('CASE WHEN q.createdAt IS NULL THEN 1 ELSE 0 END AS HIDDEN orderNullFirst');
                 $qb->addOrderBy('orderNullFirst', 'DESC');
@@ -64,33 +65,29 @@ final class PostRepository extends ServiceEntityRepository
                 break;
 
             case 'favorite':
+                $qb = $this->createQueryBuilderExcludeSomeTypes();
                 $qb->andWhere($qb->expr()->eq('q.like', true));
                 $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
                 break;
 
             case 'done':
+                $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
                 $qb->andWhere($qb->expr()->isNotNull('q.viewedAt'));
                 $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
                 break;
 
             case 'updated':
+                $qb = $this->createQueryBuilderExcludeSomeTypesAndNot404();
                 $qb->andWhere('q.lastModified > q.viewedAt');
                 $qb->orderBy(new OrderBy('q.lastModified', 'DESC'));
                 break;
+
+            case 'deleted':
+                $qb = $this->createQueryBuilderExcludeSomeTypes();
+                $qb->andWhere($qb->expr()->isNotNull('q.deletedAt'));
+                $qb->andWhere($qb->expr()->isNotNull('q.html'));
+                $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
         }
-
-        $qb->setFirstResult($page * $this->getPostsPeerPage());
-        $qb->setMaxResults($this->getPostsPeerPage());
-
-        return new Paginator($qb);
-    }
-
-    public function deleted(int $page): Paginator
-    {
-        $qb = $this->createQueryBuilderExcludeSomeTypes();
-        $qb->andWhere($qb->expr()->isNotNull('q.deletedAt'));
-        $qb->andWhere($qb->expr()->isNotNull('q.html'));
-        $qb->orderBy(new OrderBy('q.createdAt', 'DESC'));
 
         $qb->setFirstResult($page * $this->getPostsPeerPage());
         $qb->setMaxResults($this->getPostsPeerPage());
@@ -114,7 +111,8 @@ final class PostRepository extends ServiceEntityRepository
         $qb3->andWhere('q.viewedAt < q.lastModified');
         $updated = $qb3->getQuery()->getSingleScalarResult();
 
-        $qb4 = clone $qb;
+        $qb4 = $this->createQueryBuilderExcludeSomeTypes();
+        $qb4->select('count(q.id)');
         $qb4->andWhere('q.like = 1');
         $favorite = $qb4->getQuery()->getSingleScalarResult();
 

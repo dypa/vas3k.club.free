@@ -18,10 +18,12 @@ services:
       XDEBUG_MODE: develop, debug
     labels:
       ofelia.enabled: "true"
-      ofelia.job-exec.sitemap.schedule: "@every 4h"
+      ofelia.job-exec.sitemap.schedule: "@every 1h"
       ofelia.job-exec.sitemap.command: "bin/console app:sitemap"
-      ofelia.job-exec.searchindex.schedule: "@every 24h"
+      ofelia.job-exec.searchindex.schedule: "45 14 * * *"
       ofelia.job-exec.searchindex.command: "bin/console app:build-search-index"
+      ofelia.job-exec.parse.schedule: "00 16 * * *"
+      ofelia.job-exec.parse.command: "bin/console app:parse"
 
   nginx:
     image: nginx:1.27.5-alpine

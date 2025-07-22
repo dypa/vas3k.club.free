@@ -33,18 +33,15 @@ final class ApiController
         ]);
     }
 
-    #[Route('/filter/{type}/{page}', methods: ['GET'], requirements: ['type' => '(new|updated|done|favorite)', 'page' => '\d+'], defaults: ['page' => 0])]
+    #[Route(
+        '/filter/{type}/{page}',
+        methods: ['GET'],
+        requirements: ['type' => '(new|updated|done|favorite|deleted)', 'page' => '\d+'],
+        defaults: ['page' => 0]
+    )]
     public function filter(string $type, string $page): JsonResponse
     {
         $paginator = $this->postRepository->filter($type, $page);
-
-        return $this->createResponseFromPaginator($paginator);
-    }
-
-    #[Route('/filter/deleted/{page}', methods: ['GET'], defaults: ['page' => 0], requirements: ['page' => '\d+'])]
-    public function deleted(string $page): JsonResponse
-    {
-        $paginator = $this->postRepository->deleted($page);
 
         return $this->createResponseFromPaginator($paginator);
     }
