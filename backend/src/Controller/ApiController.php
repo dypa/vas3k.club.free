@@ -51,7 +51,7 @@ final class ApiController
         $paginator->setUseOutputWalkers(false);
 
         return new JsonResponse([
-            'total' => ceil(count($paginator) / $this->postRepository->getPostsPeerPage()),
+            'total' => ceil(\count($paginator) / $this->postRepository->getPostsPeerPage()),
             'data' => $paginator->getQuery()->getResult(),
         ]);
     }

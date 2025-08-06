@@ -33,13 +33,13 @@ final class SitemapParser
 
         $this->connection->executeQuery('CREATE TEMPORARY TABLE sitemap (lastmod, clubId, postType)');
         foreach ($urls as $url) {
-            if (!in_array($url->type, [PostType::INTRO, PostType::WEEKLY_DIGEST, PostType::DOCS])) {
+            if (!\in_array($url->type, [PostType::INTRO, PostType::WEEKLY_DIGEST, PostType::DOCS])) {
                 $this->connection->executeQuery("
-                INSERT INTO temp.sitemap (lastmod, clubId, postType) 
-                VALUES 
+                INSERT INTO temp.sitemap (lastmod, clubId, postType)
+                VALUES
                 (
-                    '{$url->lastmod->format('Y-m-d')}', 
-                    '{$url->clubId}', 
+                    '{$url->lastmod->format('Y-m-d')}',
+                    '{$url->clubId}',
                     '{$url->type->value}'
                 )
                 ");
@@ -66,7 +66,7 @@ final class SitemapParser
      */
     private function parseSitemap(string $content): array
     {
-        $xmlNode = \simplexml_load_string($content);
+        $xmlNode = simplexml_load_string($content);
         $urls = [];
         foreach ($xmlNode->children() as $node) {
             $loc = (string) $node->loc;
@@ -85,11 +85,11 @@ final class SitemapParser
     private function new(array $urls)
     {
         $rows = $this->connection->fetchAllAssociative('
-        SELECT 
+        SELECT
             s.clubId
         FROM temp.sitemap AS s
             LEFT JOIN post AS p ON s.clubId = p.id
-        WHERE 
+        WHERE
             p.id IS NULL
         ');
 
@@ -112,11 +112,11 @@ final class SitemapParser
         $this->connection = $this->doctrine->getConnection();
 
         $rows = $this->connection->fetchAllAssociative('
-        SELECT 
+        SELECT
             s.clubId
         FROM temp.sitemap AS s
             LEFT JOIN post AS p ON s.clubId = p.id
-        WHERE 
+        WHERE
             p.last_modified <> s.lastmod
         ');
 
@@ -134,11 +134,11 @@ final class SitemapParser
     private function cleanUp()
     {
         $rows = $this->connection->fetchAllAssociative('
-        SELECT 
+        SELECT
             p.id
         FROM temp.sitemap AS s
             RIGHT JOIN post AS p ON s.clubId = p.id
-        WHERE 
+        WHERE
             s.clubId IS NULL and p.deleted_at IS NULL
         ');
 

@@ -39,7 +39,7 @@ class BuildSearchIndexCommand extends Command
             foreach ($filters as $filter) {
                 $result = $crawler->filter($filter);
                 if ($result->count() > 0) {
-                    $searchIndex .= mb_strtolower($result->text()) . PHP_EOL;
+                    $searchIndex .= mb_strtolower($result->text()) . \PHP_EOL;
                 }
             }
 

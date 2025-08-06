@@ -104,7 +104,7 @@ final class PostPageParser
 
     private function prepareTitle(mixed $title): string|array
     {
-        $title = str_replace([' ', ' Публичный пост'], ' ', $title);
+        $title = str_replace(["\u{a0}", ' Публичный пост'], ' ', $title);
 
         return $title;
     }
