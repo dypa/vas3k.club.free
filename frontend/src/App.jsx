@@ -12,12 +12,6 @@ export function getApiHost() {
   return '//' + import.meta.env.VITE_API_HOST + ':' + import.meta.env.VITE_API_PORT
 }
 
-export function reloadPage() {
-  // TODO this is HACK
-
-  setTimeout(() => { location.reload() }, 1000)
-}
-
 const App = () => {
   return (
     <div>

@@ -1,21 +1,5 @@
 import { createSignal, onMount } from 'solid-js'
-import { getApiHost, reloadPage } from '../App'
-
-async function vote(direction, id) {
-  const uri = getApiHost() + '/api/vote/' + direction + '/' + id
-  const response = await fetch(uri)
-
-  if (!response.ok) {
-    return
-  }
-
-  const json = await response.json()
-  if (json !== true) {
-    return
-  }
-
-  reloadPage()
-}
+import { getApiHost } from '../App'
 
 export const Post = (props) => {
   const post = props.post
@@ -31,6 +15,22 @@ export const Post = (props) => {
   })
 
   const url = "https://vas3k.club/" + post.postType + "/" + post.id + "/";
+
+  async function vote(direction, id) {
+  const uri = getApiHost() + '/api/vote/' + direction + '/' + id
+  const response = await fetch(uri)
+
+  if (!response.ok) {
+    return
+  }
+
+  const json = await response.json()
+  if (json !== true) {
+    return
+  }
+
+  props.onOpenPost()
+}
 
   return (
     <>
@@ -51,7 +51,7 @@ export const Post = (props) => {
         class="go"
         target="_blank"
         href={getApiHost() + '/go/' + post.id}
-        onClick={() => { reloadPage() }}
+        onClick={() => props.onOpenPost(post.id)}
       >{title()}</a>
     </>
   )

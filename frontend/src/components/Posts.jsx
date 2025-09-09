@@ -22,7 +22,7 @@ export const Posts = (props) => {
     setPage(parseInt(params.page))
   }
 
-  const [posts] = createResource(page, loadPosts, {initialValue: []})
+  const [posts, { refetch }] = createResource(page, loadPosts, { initialValue: [] })
 
   async function loadPosts(page) {
     const response = await fetch(generateUri(type()) + '/' + page)
@@ -41,6 +41,12 @@ export const Posts = (props) => {
     navigate('/' + type() + '/' + page, { replace: true })
   }
 
+  const handleReloadPosts = (id) => {
+    setTimeout(() => {
+      refetch()
+    }, 1000)
+  };
+
   return (
     <Suspense fallback={<Loading />}>
 
@@ -49,12 +55,12 @@ export const Posts = (props) => {
       <Show when={posts().length > 0}>
         <ul>
           <For each={posts()} >
-            {(post) => <li><Post post={post} /></li>}
+            {(post) => <li><Post onOpenPost={handleReloadPosts} post={post} /></li>}
           </For>
         </ul>
       </Show>
 
-      <Show when={total() !=1 && total() > page()}>
+      <Show when={total() != 1 && total() > page()}>
         <div class="is-center">
           <a onClick={() => { nav((page() > 0 ? page() - 1 : page())) }} >◄◄◄</a>
           <span>&nbsp; {page() + 1} / {total()} &nbsp;</span>
