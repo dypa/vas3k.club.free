@@ -116,7 +116,11 @@ final class PostRepository extends ServiceEntityRepository
         $qb4->andWhere('q.like = 1');
         $favorite = $qb4->getQuery()->getSingleScalarResult();
 
-        return [$total, $viewed, $updated, $favorite];
+        $qb5 = clone $qb;
+        $qb5->andWhere($qb->expr()->isNull('q.viewedAt'));
+        $new = $qb5->getQuery()->getSingleScalarResult();
+
+        return [$total, $viewed, $updated, $favorite, $new];
     }
 
     /**

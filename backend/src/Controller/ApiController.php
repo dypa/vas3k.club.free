@@ -30,6 +30,7 @@ final class ApiController
             'viewed' => $progress[1],
             'updated' => $progress[2],
             'liked' => $progress[3],
+            'new' => $progress[4],
         ]);
     }
 
