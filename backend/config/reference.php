@@ -31,7 +31,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     type?: string|null,
  *     ignore_errors?: bool,
  * }>
- * @psalm-type ParametersConfig = array<string, scalar|\UnitEnum|array<scalar|\UnitEnum|array|null>|null>
+ * @psalm-type ParametersConfig = array<string, scalar|\UnitEnum|array<scalar|\UnitEnum|array<mixed>|null>|null>
  * @psalm-type ArgumentsType = list<mixed>|array<string, mixed>
  * @psalm-type CallType = array<string, ArgumentsType>|array{0:string, 1?:ArgumentsType, 2?:bool}|array{method:string, arguments?:ArgumentsType, returns_clone?:bool}
  * @psalm-type TagsType = list<string|array<string, array<string, mixed>>> // arrays inside the list must have only one element, with the tag name as the key
@@ -83,7 +83,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     autoconfigure?: bool,
  *     bind?: array<string, mixed>,
  *     constructor?: string,
- *     from_callable?: mixed,
+ *     from_callable?: CallbackType,
  * }
  * @psalm-type AliasType = string|array{
  *     alias: string,
@@ -775,10 +775,10 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     },
  *     orm?: array{
  *         default_entity_manager?: scalar|null,
- *         enable_native_lazy_objects?: bool, // no-op, will be deprecated and removed in the future // Default: true
+ *         enable_native_lazy_objects?: bool, // Deprecated: The "enable_native_lazy_objects" option is deprecated and will be removed in DoctrineBundle 4.0, as native lazy objects are now always enabled. // Default: true
  *         controller_resolver?: bool|array{
  *             enabled?: bool, // Default: true
- *             auto_mapping?: bool, // Set to true to enable using route placeholders as lookup criteria when the primary key doesn't match the argument name // Default: false
+ *             auto_mapping?: bool, // Deprecated: The "auto_mapping" option is deprecated and will be removed in DoctrineBundle 4.0, as it only accepts `false` since 3.0. // Set to true to enable using route placeholders as lookup criteria when the primary key doesn't match the argument name // Default: false
  *             evict_cache?: bool, // Set to true to fetch the entity from the database instead of using the cache, if any // Default: false
  *         },
  *         entity_managers?: array<string, array{ // Default: []
@@ -873,6 +873,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     },
  * }
  * @psalm-type DoctrineMigrationsConfig = array{
+ *     enable_service_migrations?: bool, // Whether to enable fetching migrations from the service container. // Default: false
  *     migrations_paths?: array<string, scalar|null>,
  *     services?: array<string, scalar|null>,
  *     factories?: array<string, scalar|null>,
@@ -895,52 +896,55 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     enable_profiler?: bool, // Whether or not to enable the profiler collector to calculate and visualize migration status. This adds some queries overhead. // Default: false
  *     transactional?: bool, // Whether or not to wrap migrations in a single transaction. // Default: true
  * }
+ * @psalm-type ConfigType = array{
+ *     imports?: ImportsConfig,
+ *     parameters?: ParametersConfig,
+ *     services?: ServicesConfig,
+ *     framework?: FrameworkConfig,
+ *     doctrine?: DoctrineConfig,
+ *     doctrine_migrations?: DoctrineMigrationsConfig,
+ *     "when@dev"?: array{
+ *         imports?: ImportsConfig,
+ *         parameters?: ParametersConfig,
+ *         services?: ServicesConfig,
+ *         framework?: FrameworkConfig,
+ *         doctrine?: DoctrineConfig,
+ *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *     },
+ *     "when@prod"?: array{
+ *         imports?: ImportsConfig,
+ *         parameters?: ParametersConfig,
+ *         services?: ServicesConfig,
+ *         framework?: FrameworkConfig,
+ *         doctrine?: DoctrineConfig,
+ *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *     },
+ *     "when@test"?: array{
+ *         imports?: ImportsConfig,
+ *         parameters?: ParametersConfig,
+ *         services?: ServicesConfig,
+ *         framework?: FrameworkConfig,
+ *         doctrine?: DoctrineConfig,
+ *         doctrine_migrations?: DoctrineMigrationsConfig,
+ *     },
+ *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
+ *         imports?: ImportsConfig,
+ *         parameters?: ParametersConfig,
+ *         services?: ServicesConfig,
+ *         ...<string, ExtensionType>,
+ *     }>
+ * }
  */
-final class App extends AppReference
+final class App
 {
     /**
-     * @param array{
-     *     imports?: ImportsConfig,
-     *     parameters?: ParametersConfig,
-     *     services?: ServicesConfig,
-     *     framework?: FrameworkConfig,
-     *     doctrine?: DoctrineConfig,
-     *     doctrine_migrations?: DoctrineMigrationsConfig,
-     *     "when@dev"?: array{
-     *         imports?: ImportsConfig,
-     *         parameters?: ParametersConfig,
-     *         services?: ServicesConfig,
-     *         framework?: FrameworkConfig,
-     *         doctrine?: DoctrineConfig,
-     *         doctrine_migrations?: DoctrineMigrationsConfig,
-     *     },
-     *     "when@prod"?: array{
-     *         imports?: ImportsConfig,
-     *         parameters?: ParametersConfig,
-     *         services?: ServicesConfig,
-     *         framework?: FrameworkConfig,
-     *         doctrine?: DoctrineConfig,
-     *         doctrine_migrations?: DoctrineMigrationsConfig,
-     *     },
-     *     "when@test"?: array{
-     *         imports?: ImportsConfig,
-     *         parameters?: ParametersConfig,
-     *         services?: ServicesConfig,
-     *         framework?: FrameworkConfig,
-     *         doctrine?: DoctrineConfig,
-     *         doctrine_migrations?: DoctrineMigrationsConfig,
-     *     },
-     *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
-     *         imports?: ImportsConfig,
-     *         parameters?: ParametersConfig,
-     *         services?: ServicesConfig,
-     *         ...<string, ExtensionType>,
-     *     }>
-     * } $config
+     * @param ConfigType $config
+     *
+     * @psalm-return ConfigType
      */
     public static function config(array $config): array
     {
-        return parent::config($config);
+        return AppReference::config($config);
     }
 }
 
@@ -957,8 +961,7 @@ namespace Symfony\Component\Routing\Loader\Configurator;
  *
  *     return Routes::config([
  *         'controllers' => [
- *             'resource' => 'attributes',
- *             'type' => 'tagged_services',
+ *             'resource' => 'routing.controllers',
  *         ],
  *     ]);
  *     ```
@@ -1009,7 +1012,7 @@ namespace Symfony\Component\Routing\Loader\Configurator;
  *     ...<string, RouteConfig|ImportConfig|AliasConfig>
  * }
  */
-final class Routes extends RoutesReference
+final class Routes
 {
     /**
      * @param RoutesConfig $config
@@ -1018,6 +1021,6 @@ final class Routes extends RoutesReference
      */
     public static function config(array $config): array
     {
-        return parent::config($config);
+        return $config;
     }
 }
