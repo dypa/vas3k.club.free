@@ -26,7 +26,7 @@ services:
       ofelia.job-exec.parse.command: "bin/console app:parse"
 
   nginx:
-    image: nginx:1.27.5-alpine
+    image: nginx:1-alpine
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./frontend:/app
